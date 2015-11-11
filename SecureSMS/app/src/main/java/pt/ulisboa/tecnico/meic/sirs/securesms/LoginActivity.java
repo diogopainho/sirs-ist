@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     @InjectView(R.id.btn_login) Button _loginButton;
     @InjectView(R.id.link_signup) TextView _signupLink;
     @InjectView(R.id.temp_skip) TextView _tempSkip;
+    @InjectView(R.id.temp1_skip) TextView _temp1Skip;
 
     String myPhoneNumber =  "917245592";
 
@@ -60,6 +61,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        _temp1Skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SmsList.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -79,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
 
-        // TODO: Implement your own authentication logic here.
+
         if(phoneNumber.equals("917245592") && password.equals("123qwe")){
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
@@ -96,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                     }, 3000);
 
             //Adicionar aqui o Itent para a outra atividade
+            Intent intent = new Intent(getApplicationContext(), SmsList.class);
+            startActivity(intent);
 
         } else {
             _passwordText.setError("Wrong Password");

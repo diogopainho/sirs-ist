@@ -19,20 +19,22 @@
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:ems="10"
+            android:text="Phone Number"
             android:id="@+id/phone_number" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:id="@+id/send_button"
-            android:layout_gravity="center_horizontal" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
+            android:text="Message"
             android:id="@+id/message" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:id="@+id/send_button"
+            android:layout_gravity="right" />
     </LinearLayout>
 </RelativeLayout>
