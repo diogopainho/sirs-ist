@@ -14,21 +14,33 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true">
 
-        <EditText
+        <!--  Phone Number Label -->
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:text="Phone Number"
-            android:id="@+id/phone_number" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="@style/AppTheme.Dark">
+            <EditText android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Phone Number" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
+        <!--  Message Label -->
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:text="Message"
-            android:id="@+id/message" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="@style/AppTheme.Dark">
+            <EditText android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="Message" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:layout_width="wrap_content"

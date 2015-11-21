@@ -8,11 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class SmsComposer extends AppCompatActivity {
-
     @InjectView(R.id.phone_number) EditText _phoneNumber;
     @InjectView(R.id.message) EditText _message;
     @InjectView(R.id.send_button) Button _sendButton;
@@ -31,7 +37,12 @@ public class SmsComposer extends AppCompatActivity {
                 String message = _message.getText().toString();
 
                 SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+               // smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
+               //Para guardar na base de dados
+                Message_Model model = new Message_Model(phoneNumber, message);
+                model.save();
+
             }
         });
     }
