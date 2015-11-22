@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by diogopainho on 21/11/15.
  */
-public class Adapter_SmsList extends RecyclerView.Adapter<Adapter_SmsList.ViewHolder> {
+public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHolder> {
     private ArrayList<Message_Model> mDataset;
 
     // Provide a reference to the views for each data item
@@ -42,13 +42,13 @@ public class Adapter_SmsList extends RecyclerView.Adapter<Adapter_SmsList.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public Adapter_SmsList(ArrayList<Message_Model> myDataset) {
+    public AdapterSmsList(ArrayList<Message_Model> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public Adapter_SmsList.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public AdapterSmsList.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                          int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_list, parent, false);

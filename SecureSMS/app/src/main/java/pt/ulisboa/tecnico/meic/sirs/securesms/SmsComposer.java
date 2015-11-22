@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -42,6 +43,9 @@ public class SmsComposer extends AppCompatActivity {
                //Para guardar na base de dados
                 Message_Model model = new Message_Model(phoneNumber, message);
                 model.save();
+
+                Intent intent = new Intent(getApplicationContext(), SmsList.class);
+                startActivity(intent);
 
             }
         });

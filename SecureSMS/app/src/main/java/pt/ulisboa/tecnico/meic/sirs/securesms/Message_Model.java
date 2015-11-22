@@ -4,17 +4,12 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-/**
- * Created by diogopainho on 21/11/15.
- */
+
 @Table(name="Messages")
 public class Message_Model extends Model {
-    @Column(name="Destination")
-    String to;
-    @Column(name="Message")
-    String message = new String();
-    @Column(name="Timestamp")
-    int timestamp = 0;
+    @Column(name="Destination") String to;
+    @Column(name="Message") String message = new String();
+    @Column(name="Timestamp") int timestamp = 0;
 
     public Message_Model() {
 

@@ -4,9 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 
-/**
- * Created by diogopainho on 21/11/15.
- */
+
 public class SecureSMSApplication extends android.app.Application {
 
     @Override

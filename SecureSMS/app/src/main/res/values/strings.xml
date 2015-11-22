@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SecureSMS</string>
     <string name="title_activity_sms_list">SmsList</string>
+    <string name="title_activity_contact_list">ContactList</string>
 </resources>
