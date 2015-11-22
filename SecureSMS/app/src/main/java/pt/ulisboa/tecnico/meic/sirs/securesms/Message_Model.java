@@ -36,5 +36,9 @@ public class Message_Model extends Model {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public void incTimestamp() {
+        this.timestamp += 1;
+    }
 }
 

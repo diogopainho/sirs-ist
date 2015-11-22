@@ -1,10 +1,8 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import android.content.Intent;
@@ -57,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         _tempSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SmsComposer.class);
+                Intent intent = new Intent(getApplicationContext(), SmsComposerActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         _temp1Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SmsList.class);
+                Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
                 startActivity(intent);
             }
         });
@@ -106,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                     }, 3000);
 
             //Adicionar aqui o Itent para a outra atividade
-            Intent intent = new Intent(getApplicationContext(), SmsList.class);
+            Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
             startActivity(intent);
 
         } else {

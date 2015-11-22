@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.activeandroid.query.Select;
@@ -18,13 +17,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class ContactList extends AppCompatActivity {
+public class ContactListActivity extends AppCompatActivity {
     AdapterContactList adaptercontactlist;
 
     @InjectView(R.id.contact_list)
     RecyclerView contactlist;
-    @InjectView(R.id.scanqrcode)
-    ImageView scanqrcode;
+    @InjectView(R.id.addcontact)
+    ImageView addcontact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +38,11 @@ public class ContactList extends AppCompatActivity {
 
     }
 
-   /* @OnClick(R.id.scanqrcode)
-    public void goToScanQRCode(){
-        Intent intent = new Intent(getApplicationContext(), ScanQRCode.class);
+    @OnClick(R.id.addcontact)
+    public void goToAddContact(){
+        Intent intent = new Intent(getApplicationContext(), AddContactActivity.class);
         startActivity(intent);
-    }*/
+    }
 
     public static List<Contact_Model> getAll(){
         return new Select().from(Contact_Model.class).orderBy("Name DESC").execute();

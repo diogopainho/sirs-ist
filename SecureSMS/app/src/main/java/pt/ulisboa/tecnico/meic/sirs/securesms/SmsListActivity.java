@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.activeandroid.query.Select;
 
@@ -17,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class SmsList extends AppCompatActivity {
+public class SmsListActivity extends AppCompatActivity {
     AdapterSmsList adapter_smsList;
 
     @InjectView(R.id.message_list) RecyclerView messagelist;
@@ -38,17 +37,18 @@ public class SmsList extends AppCompatActivity {
 
     @OnClick(R.id.compose)
     public void goToCompose(){
-        Intent intent = new Intent(getApplicationContext(), SmsComposer.class);
+        Intent intent = new Intent(getApplicationContext(), SmsComposerActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.contacts)
     public void goToContactList(){
-        Intent intent = new Intent(getApplicationContext(), ContactList.class);
+        Intent intent = new Intent(getApplicationContext(), ContactListActivity.class);
         startActivity(intent);
     }
 
     public static List<Message_Model> getAll(){
+        //TODO: Selecionar a ultima mensagem de cada contacto
         return new Select().from(Message_Model.class).orderBy("Timestamp DESC").execute();
     }
 

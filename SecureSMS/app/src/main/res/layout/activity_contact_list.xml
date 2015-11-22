@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="pt.ulisboa.tecnico.meic.sirs.securesms.ContactList">
+    tools:context=".ContactListActivity">
 
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent" android:theme="@style/AppTheme.Dark.AppBarOverlay"
@@ -37,12 +37,12 @@
         android:clickable="true">
 
         <ImageView
-            android:id="@+id/scanqrcode"
+            android:id="@+id/addcontact"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:src="@android:drawable/ic_menu_add"/>
 
     </LinearLayout>
 
