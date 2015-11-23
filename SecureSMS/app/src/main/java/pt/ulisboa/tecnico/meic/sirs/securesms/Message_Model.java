@@ -7,7 +7,8 @@ import com.activeandroid.annotation.Table;
 
 @Table(name="Messages")
 public class Message_Model extends Model {
-    @Column(name="Destination") String to;
+    @Column(name="ReceivedFrom") String from;
+    @Column(name="SentTo") String to;
     @Column(name="Message") String message = new String();
     @Column(name="Timestamp") int timestamp = 0;
 
@@ -15,10 +16,21 @@ public class Message_Model extends Model {
 
     }
 
-    public Message_Model(String to, String message) {
-        this.to = to;
-        this.message = message;
+    public Message_Model(String fromto, String message, Boolean sent) {
 
+        if(sent){
+            this.to = fromto;
+        } else {
+            this.from = fromto;
+        }
+
+        this.message = message;
+        this.timestamp += 1;
+
+    }
+
+    public String getFrom() {
+        return from;
     }
 
     public String getTo() {
@@ -29,6 +41,8 @@ public class Message_Model extends Model {
         return message;
     }
 
+    public void setFrom(String from) { this.from = from; }
+
     public void setTo(String to) {
         this.to = to;
     }
@@ -37,8 +51,5 @@ public class Message_Model extends Model {
         this.message = message;
     }
 
-    public void incTimestamp() {
-        this.timestamp += 1;
-    }
 }
 

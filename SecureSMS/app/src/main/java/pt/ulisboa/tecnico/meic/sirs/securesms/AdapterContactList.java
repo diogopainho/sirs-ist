@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 
 public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.ViewHolder> {
     private ArrayList<Contact_Model> mDataset;
+    private Context appContext;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -25,7 +28,6 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
             super(v);
             txtName = (TextView) v.findViewById(R.id.firstLine);
             txtNumber = (TextView) v.findViewById(R.id.secondLine);
-            txtKey = (TextView) v.findViewById(R.id.thirdLine);
         }
     }
 
@@ -41,8 +43,9 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public AdapterContactList(ArrayList<Contact_Model> myDataset) {
+    public AdapterContactList(ArrayList<Contact_Model> myDataset, Context appContext) {
         mDataset = myDataset;
+        this.appContext = appContext;
     }
 
     // Create new views (invoked by the layout manager)
@@ -65,8 +68,21 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
         final Contact_Model contact = mDataset.get(position);
         holder.txtName.setText(contact.getName());
         holder.txtNumber.setText(mDataset.get(position).getPhoneNumber());
-        holder.txtKey.setText(mDataset.get(position).getPublicKey());
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(appContext, GenerateQRCodeActivity.class);
+                intent.putExtra("Name", contact.getName());
+                intent.putExtra("PhoneNumber", contact.getPhoneNumber());
+                intent.putExtra("PubKey", contact.getPublicKey());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                appContext.startActivity(intent);
+            }
+        });
         //Accao para apagar a mensagem
         /*holder.txtHeader.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

@@ -62,12 +62,22 @@ public class ScanQRCodeActivity extends Activity {
 
     //on ActivityResult method
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        String[] parse;
+        String delim = ";";
+
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 //get the extras that are returned from the intent
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                Toast toast = Toast.makeText(this, "Content:" + contents + " Format:" + format, Toast.LENGTH_LONG);
+
+                //Faz parse ao conteudo do QR e insere na BD o novo contacto
+                parse = contents.split(delim);
+
+                Contact_Model newContact = new Contact_Model(parse[0], parse[1], parse[2].getBytes());
+                newContact.save();
+
+                Toast toast = Toast.makeText(this, "Nome:" + parse[0] + " Number:" + parse[1] + " Key: " + parse[2], Toast.LENGTH_LONG);
                 toast.show();
             }
         }

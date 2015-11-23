@@ -10,17 +10,31 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
+import javax.crypto.KeyGenerator;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class FirstLoginActivity extends AppCompatActivity {
     private static final String TAG = "FirstLoginActivity";
 
-    @InjectView(R.id.input_name) EditText _nameText;
-    @InjectView(R.id.input_email) EditText _emailText;
-    @InjectView(R.id.input_password) EditText _passwordText;
-    @InjectView(R.id.btn_signup) Button _signupButton;
-    @InjectView(R.id.link_login) TextView _loginLink;
+    @InjectView(R.id.input_name)
+    EditText _nameText;
+    @InjectView(R.id.input_email)
+    EditText _emailText;
+    @InjectView(R.id.input_password)
+    EditText _passwordText;
+    @InjectView(R.id.btn_signup)
+    Button _signupButton;
+    @InjectView(R.id.link_login)
+    TextView _loginLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,12 +42,6 @@ public class FirstLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_firstlogin);
         ButterKnife.inject(this);
 
-        _signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signup();
-            }
-        });
 
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,11 +52,13 @@ public class FirstLoginActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick(R.id.btn_signup)
     public void signup() {
-        Log.d(TAG, "Signup");
 
         if (!validate()) {
-            onSignupFailed();
+            Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+
+            _signupButton.setEnabled(true);
             return;
         }
 
@@ -62,34 +72,29 @@ public class FirstLoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         String name = _nameText.getText().toString();
-        String phone = _emailText.getText().toString();
+        String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own signup logic here.
+
+
+        //As chaves sao geradas no momento do first login e sao armazenadas na base de dados
+        //TODO: O numero, deve ir buscar a rede movel
+        MyContact myContact = new MyContact(name, "917245592", email, password, generateKeyPair());
+        myContact.save();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        onSignupSuccess();
+                        _signupButton.setEnabled(true);
+                        finish();
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
-    }
 
 
-    public void onSignupSuccess() {
-        _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
-        finish();
-    }
-
-    public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
-        _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
@@ -121,5 +126,20 @@ public class FirstLoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+
+    public KeyPair generateKeyPair() {
+        KeyPairGenerator keyPairGenerator = null;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        keyPairGenerator.initialize(1024);
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        return keyPair;
     }
 }

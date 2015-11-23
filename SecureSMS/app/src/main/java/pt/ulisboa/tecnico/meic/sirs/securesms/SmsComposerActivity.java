@@ -4,9 +4,20 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.activeandroid.query.Select;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,16 +40,12 @@ public class SmsComposerActivity extends AppCompatActivity {
         String phoneNumber = _phoneNumber.getText().toString();
         String message = _message.getText().toString();
 
-        SmsManager smsManager = SmsManager.getDefault();
-        // smsManager.sendTextMessage(phoneNumber, null, message, null, null);
-
-        //Para guardar na base de dados
-        Message_Model model = new Message_Model(phoneNumber, message);
-        model.incTimestamp();
-        model.save();
+        SmsSender smsSender = new SmsSender();
+        smsSender.sendSms(phoneNumber, message);
 
         Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
         startActivity(intent);
+
 
     }
 }

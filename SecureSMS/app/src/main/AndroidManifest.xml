@@ -44,6 +44,14 @@
         <activity
             android:name=".ScanQRCodeActivity" >
         </activity>
+        <activity
+            android:name=".GenerateQRCodeActivity" >
+        </activity>
+        <receiver android:name="pt.ulisboa.tecnico.meic.sirs.securesms.SmsReceiver" android:enabled="true">
+            <intent-filter android:priority="214748364">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

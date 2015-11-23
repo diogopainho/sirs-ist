@@ -12,8 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -33,14 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
-
-        _loginButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
 
         _signupLink.setOnClickListener(new View.OnClickListener() {
 
@@ -70,8 +65,15 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
+    @OnClick(R.id.btn_login)
     public void login() {
+        String phoneNumber = _phoneNumber.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        MyContact mycontact = new Select().from(MyContact.class).where("PhoneNumber=?", phoneNumber).orderBy("RANDOM()").executeSingle();
+        Log.d("PASSWORD", mycontact.getPassword());
+        String mypassword = mycontact.getPassword();
+
         Log.d(TAG, "Login");
 
         if (!validate()) {
@@ -81,14 +83,13 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        String phoneNumber = _phoneNumber.getText().toString();
-        String password = _passwordText.getText().toString();
+
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
 
 
-        if(phoneNumber.equals("917245592") && password.equals("123qwe")){
+        if(password.equals(mypassword)){
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();

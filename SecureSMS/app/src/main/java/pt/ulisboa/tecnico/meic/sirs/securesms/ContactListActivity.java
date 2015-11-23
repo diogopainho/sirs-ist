@@ -33,8 +33,12 @@ public class ContactListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.inject(this);
         ArrayList<Contact_Model> contact = new ArrayList<Contact_Model>();
-        adaptercontactlist = new AdapterContactList(contact);
+        adaptercontactlist = new AdapterContactList(contact, getApplicationContext());
         contactlist.setLayoutManager(new LinearLayoutManager(this));
+
+        Contact_Model testcontact = new Contact_Model("Diogo", "917245592", "KEY".getBytes());
+        testcontact.save();
+
 
     }
 
@@ -53,7 +57,7 @@ public class ContactListActivity extends AppCompatActivity {
         super.onResume();
 
         ArrayList<Contact_Model> contact = (ArrayList<Contact_Model>) getAll();
-        adaptercontactlist = new AdapterContactList(contact);
+        adaptercontactlist = new AdapterContactList(contact, getApplicationContext());
         contactlist.setAdapter(adaptercontactlist);
         contactlist.invalidate();
     }

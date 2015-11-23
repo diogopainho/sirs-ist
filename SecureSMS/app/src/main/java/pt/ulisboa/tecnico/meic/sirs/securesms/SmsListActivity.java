@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.activeandroid.query.Select;
 
@@ -35,6 +36,18 @@ public class SmsListActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.qrcode)
+    public void goToGenerateQRCode(){
+        MyContact mycontact = new Select().from(MyContact.class).executeSingle();
+        Intent intent = new Intent(getApplicationContext(), GenerateQRCodeActivity.class);
+
+        intent.putExtra("Name", mycontact.getName());
+        intent.putExtra("PhoneNumber", mycontact.getPhoneNumber());
+        intent.putExtra("PubKey", mycontact.getBytesPrivatekey());
+
+        startActivity(intent);
+    }
+
     @OnClick(R.id.compose)
     public void goToCompose(){
         Intent intent = new Intent(getApplicationContext(), SmsComposerActivity.class);
@@ -48,7 +61,7 @@ public class SmsListActivity extends AppCompatActivity {
     }
 
     public static List<Message_Model> getAll(){
-        //TODO: Selecionar a ultima mensagem de cada contacto
+        //TODO: Selecionar a ultima mensagem de cada contato
         return new Select().from(Message_Model.class).orderBy("Timestamp DESC").execute();
     }
 
