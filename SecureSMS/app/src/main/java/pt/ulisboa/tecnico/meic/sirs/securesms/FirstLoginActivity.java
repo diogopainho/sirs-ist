@@ -1,8 +1,10 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,8 @@ public class FirstLoginActivity extends AppCompatActivity {
     @InjectView(R.id.link_login)
     TextView _loginLink;
 
+    String myphonenumber;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,8 @@ public class FirstLoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_signup)
     public void signup() {
+
+        Toast.makeText(this, " Number:" + myphonenumber, Toast.LENGTH_LONG).show();
 
         if (!validate()) {
             Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();

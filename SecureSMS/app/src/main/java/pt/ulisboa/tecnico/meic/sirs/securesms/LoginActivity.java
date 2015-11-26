@@ -1,8 +1,10 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import android.content.Intent;
@@ -29,13 +31,17 @@ public class LoginActivity extends AppCompatActivity {
     @InjectView(R.id.temp_skip) TextView _tempSkip;
     @InjectView(R.id.temp1_skip) TextView _temp1Skip;
 
-    String myPhoneNumber =  "917245592";
+    String myPhoneNumber = null;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+
+
 
         _signupLink.setOnClickListener(new View.OnClickListener() {
 
@@ -152,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         String phoneNumber = _phoneNumber.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (phoneNumber.isEmpty() || phoneNumber.length() != 9) {
+        if (phoneNumber.isEmpty()) {
             _phoneNumber.setError("enter a valid phone number");
             valid = false;
         } else {

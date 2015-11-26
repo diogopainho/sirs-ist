@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
-public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHolder> {
+/**
+ * Created by diogopainho on 23/11/15.
+ */
+public class AdapterConversationList extends RecyclerView.Adapter<AdapterConversationList.ViewHolder> {
     private ArrayList<Message_Model> mDataset;
-    private Context appContext;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -44,15 +44,14 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public AdapterSmsList(ArrayList<Message_Model> myDataset, Context appContext) {
+    public AdapterConversationList(ArrayList<Message_Model> myDataset) {
         mDataset = myDataset;
-        this.appContext = appContext;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public AdapterSmsList.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
+    public AdapterConversationList.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
@@ -67,23 +66,8 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
         // - replace the contents of the view with that element
 
         final Message_Model message = mDataset.get(position);
-
-        if(message.getFrom() != null){
-            holder.txtHeader.setText(message.getFrom());
-        } else { holder.txtHeader.setText(message.getTo()); }
-
-        holder.txtFooter.setText(message.getMessage().substring(0, Math.min(10, message.getMessage().length())));
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(appContext, ConversationActivity.class);
-                intent.putExtra("TO", message.getTo());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                appContext.startActivity(intent);
-            }
-        });
+        //holder.txtHeader.setText(message.getTo());
+        holder.txtHeader.setText(message.getMessage());
 
         //Accao para apagar a mensagem
         /*holder.txtHeader.setOnLongClickListener(new View.OnLongClickListener() {
@@ -93,8 +77,9 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
             }
         };*/
 
+        holder.txtFooter.setText(mDataset.get(position).getMessage());
 
-
+        Log.d("ADAPTER", position + "");
 
     }
 
@@ -107,4 +92,5 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
     public void setDataset(ArrayList<Message_Model> messages){
         this.mDataset=messages;
     }
+
 }

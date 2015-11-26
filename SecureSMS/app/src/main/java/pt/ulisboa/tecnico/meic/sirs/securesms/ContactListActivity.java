@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
@@ -36,16 +37,14 @@ public class ContactListActivity extends AppCompatActivity {
         adaptercontactlist = new AdapterContactList(contact, getApplicationContext());
         contactlist.setLayoutManager(new LinearLayoutManager(this));
 
-        Contact_Model testcontact = new Contact_Model("Diogo", "917245592", "KEY".getBytes());
-        testcontact.save();
-
-
     }
 
     @OnClick(R.id.addcontact)
     public void goToAddContact(){
         Intent intent = new Intent(getApplicationContext(), AddContactActivity.class);
         startActivity(intent);
+
+        Toast.makeText(getApplicationContext(), intent.getStringExtra("NOME") + " " + intent.getStringExtra("NUMBER") + " " + intent.getStringExtra("KEY"), Toast.LENGTH_SHORT).show();
     }
 
     public static List<Contact_Model> getAll(){

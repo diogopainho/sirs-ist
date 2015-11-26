@@ -73,12 +73,21 @@ public class ScanQRCodeActivity extends Activity {
 
                 //Faz parse ao conteudo do QR e insere na BD o novo contacto
                 parse = contents.split(delim);
-
                 Contact_Model newContact = new Contact_Model(parse[0], parse[1], parse[2].getBytes());
                 newContact.save();
 
-                Toast toast = Toast.makeText(this, "Nome:" + parse[0] + " Number:" + parse[1] + " Key: " + parse[2], Toast.LENGTH_LONG);
-                toast.show();
+                Intent intent1 = new Intent(getBaseContext(), ContactListActivity.class);
+                intent1.putExtra("NOME", parse[0]);
+                intent1.putExtra("NUMBER", parse[1]);
+                intent1.putExtra("KEY", parse[2]);
+                startActivity(intent1);
+
+               // Toast toast = Toast.makeText(getApplicationContext(), "Nome:" + parse[0] + " Number:" + parse[1], Toast.LENGTH_LONG);
+               // toast.show();
+
+
+
+
             }
         }
     }

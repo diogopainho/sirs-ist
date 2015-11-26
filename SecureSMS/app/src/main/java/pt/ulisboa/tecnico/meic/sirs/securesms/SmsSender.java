@@ -1,8 +1,15 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
@@ -10,7 +17,6 @@ import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 
@@ -18,18 +24,15 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+
 
 /**
  * Created by diogopainho on 22/11/15.
  */
 public class SmsSender {
 
-    public SmsSender() {
-    }
 
-    public void sendSms(String phoneNumber, String message) {
+    public void sendSms(String phoneNumber, String message, Context context) {
 
         //Para guardar na base de dados
         Message_Model model = new Message_Model(phoneNumber, message, true);
@@ -40,8 +43,21 @@ public class SmsSender {
         PrivateKey privateKey = bytesToPrivateKey(myContact.getBytesPrivatekey());
         String cipheredMessage = cipherMessage(message, privateKey);
 
-        SmsManager smsManager = SmsManager.getDefault();
-        // smsManager.sendTextMessage(phoneNumber, null, cipheredMessage, null, null);
+        try {
+            // Get the default instance of the SmsManager
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber,
+                    null,
+                    message,
+                    null,
+                    null);
+            Toast.makeText(context, "Your sms has successfully sent!"+" "+phoneNumber+" "+cipheredMessage,
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Toast.makeText(context,"Your sms has failed...",
+                    Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
 
     }
 

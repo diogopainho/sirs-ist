@@ -41,7 +41,7 @@ public class SmsComposerActivity extends AppCompatActivity {
         String message = _message.getText().toString();
 
         SmsSender smsSender = new SmsSender();
-        smsSender.sendSms(phoneNumber, message);
+        smsSender.sendSms(phoneNumber, message, getApplicationContext());
 
         Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
         startActivity(intent);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -26,36 +27,38 @@ import javax.crypto.NoSuchPaddingException;
 
 public class SmsReceiver extends BroadcastReceiver {
 
-    private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+    public static final String SMS_BUNDLE = "pdus";
 
-    @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals(SMS_RECEIVED)){
-            Bundle bundle = intent.getExtras();
-            if(bundle != null){
-                //get sms objects
-                Object[] pdus = (Objects[]) bundle.get("pdus");
-                if(pdus.length == 0){
-                    return;
-                }
-                //large message might be broken into many
-                SmsMessage[] messages = new SmsMessage[pdus.length];
-                StringBuilder sb = new StringBuilder();
-                for (int i=0; i<pdus.length; i++){
-                    messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                    sb.append(messages[i].getMessageBody());
-                }
-                String sender = messages[0].getOriginatingAddress();
-                String message = sb.toString();
+        String smsBody = null;
+        String address = null;
+        Bundle intentExtras = intent.getExtras();
+        if (intentExtras != null) {
+            Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
+            String smsMessageStr = "";
+            for (int i = 0; i < sms.length; ++i) {
+                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
-                //Guarda a mensagem decifrada
-                Message_Model receivedMessage = new Message_Model(sender, decypherMessage(message, sender), false);
-                receivedMessage.save();
+                smsBody = smsMessage.getMessageBody().toString();
+                address = smsMessage.getOriginatingAddress();
 
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                smsMessageStr += "SMS From: " + address + "\n";
+                smsMessageStr += smsBody + "\n";
             }
+            Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
+
+            //Guarda a mensagem decifrada
+            Message_Model receivedMessage = new Message_Model(address, smsBody, false);
+            receivedMessage.save();
+
+            Log.d("ADDRESS: ", address);
+
+            //SmsListActivity inst = SmsListActivity.getInstance();
+            //inst.onResume();
         }
+
     }
+
 
     public String decypherMessage(String receivedMessage, String sender){
 
