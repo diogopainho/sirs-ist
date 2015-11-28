@@ -1,11 +1,8 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import android.content.Intent;
 import android.view.View;
@@ -30,10 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     @InjectView(R.id.link_signup) TextView _signupLink;
     @InjectView(R.id.temp_skip) TextView _tempSkip;
     @InjectView(R.id.temp1_skip) TextView _temp1Skip;
-
-    String myPhoneNumber = null;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,10 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         MyContact mycontact = new Select().from(MyContact.class).where("PhoneNumber=?", phoneNumber).orderBy("RANDOM()").executeSingle();
-        Log.d("PASSWORD", mycontact.getPassword());
         String mypassword = mycontact.getPassword();
+        String myphonenumber = mycontact.getPhoneNumber();
 
-        Log.d(TAG, "Login");
 
         if (!validate()) {
             onLoginFailed();
@@ -89,13 +81,11 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-
-
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
 
 
-        if(password.equals(mypassword)){
+        if(password.equals(mypassword) && phoneNumber.equals(myphonenumber)){
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage("Authenticating...");
             progressDialog.show();
@@ -110,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }, 3000);
 
-            //Adicionar aqui o Itent para a outra atividade
             Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
+            intent.putExtra("PHONE_NUMBER", myphonenumber);
             startActivity(intent);
 
         } else {
@@ -122,13 +112,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
                 this.finish();
             }

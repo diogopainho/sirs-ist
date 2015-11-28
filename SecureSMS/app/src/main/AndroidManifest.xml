@@ -46,7 +46,7 @@
             android:name=".AddContactActivity" >
         </activity>
         <activity
-            android:name=".ScanQRCodeActivity" >
+            android:name=".AddContact" >
         </activity>
         <activity
             android:name=".GenerateQRCodeActivity" >

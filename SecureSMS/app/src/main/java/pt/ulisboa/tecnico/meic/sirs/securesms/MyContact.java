@@ -14,7 +14,6 @@ public class MyContact extends Model {
 
     @Column(name="Name") String name;
     @Column(name="PhoneNumber") String phonenumber;
-    @Column(name="Email") String email;
     @Column(name="Password") String password;
     @Column(name="PrivateKey") byte[] privatekey;
     @Column(name="PublicKey") byte[] publickey;
@@ -22,10 +21,9 @@ public class MyContact extends Model {
     public MyContact() {
     }
 
-    public MyContact(String name, String phonenumber, String email, String password, KeyPair keyPair) {
+    public MyContact(String name, String phonenumber, String password, KeyPair keyPair) {
         this.name = name;
         this.phonenumber = phonenumber;
-        this.email = email;
         this.password = password;
         this.privatekey = keyPair.getPrivate().getEncoded();
         this.publickey = keyPair.getPublic().getEncoded();

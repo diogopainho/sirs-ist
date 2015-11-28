@@ -1,11 +1,8 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +12,6 @@ import android.widget.Toast;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-
-import javax.crypto.KeyGenerator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,16 +22,14 @@ public class FirstLoginActivity extends AppCompatActivity {
 
     @InjectView(R.id.input_name)
     EditText _nameText;
-    @InjectView(R.id.input_email)
-    EditText _emailText;
+    @InjectView(R.id.input_phone)
+    EditText _phoneText;
     @InjectView(R.id.input_password)
     EditText _passwordText;
     @InjectView(R.id.btn_signup)
     Button _signupButton;
     @InjectView(R.id.link_login)
     TextView _loginLink;
-
-    String myphonenumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +50,6 @@ public class FirstLoginActivity extends AppCompatActivity {
     @OnClick(R.id.btn_signup)
     public void signup() {
 
-        Toast.makeText(this, " Number:" + myphonenumber, Toast.LENGTH_LONG).show();
-
         if (!validate()) {
             Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
@@ -78,14 +67,11 @@ public class FirstLoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
+        String phonenumber = _phoneText.getText().toString();
         String password = _passwordText.getText().toString();
 
-
-
         //As chaves sao geradas no momento do first login e sao armazenadas na base de dados
-        //TODO: O numero, deve ir buscar a rede movel
-        MyContact myContact = new MyContact(name, "917245592", email, password, generateKeyPair());
+        MyContact myContact = new MyContact(name, phonenumber, password, generateKeyPair());
         myContact.save();
 
         new android.os.Handler().postDelayed(
@@ -107,7 +93,7 @@ public class FirstLoginActivity extends AppCompatActivity {
         boolean valid = true;
 
         String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
+        String phone = _phoneText.getText().toString();
         String password = _passwordText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
@@ -117,11 +103,11 @@ public class FirstLoginActivity extends AppCompatActivity {
             _nameText.setError(null);
         }
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+        if (phone.isEmpty() || phone.length() != 9) {
+            _phoneText.setError("enter a valid phone number address");
             valid = false;
         } else {
-            _emailText.setError(null);
+            _phoneText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {

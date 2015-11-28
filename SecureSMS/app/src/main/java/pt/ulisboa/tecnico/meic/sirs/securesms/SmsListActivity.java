@@ -43,7 +43,7 @@ public class SmsListActivity extends AppCompatActivity {
 
     @OnClick(R.id.qrcode)
     public void goToGenerateQRCode(){
-        MyContact mycontact = new Select().from(MyContact.class).executeSingle();
+        MyContact mycontact = new Select().from(MyContact.class).where("PhoneNumber=?", getIntent().getStringExtra("PHONE_NUMBER")).executeSingle();
         Intent intent = new Intent(getApplicationContext(), GenerateQRCodeActivity.class);
 
         intent.putExtra("Name", mycontact.getName());
