@@ -76,9 +76,9 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
             public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(appContext, GenerateQRCodeActivity.class);
-                intent.putExtra("Name", contact.getName());
-                intent.putExtra("PhoneNumber", contact.getPhoneNumber());
-                intent.putExtra("PubKey", contact.getPublicKey());
+                intent.putExtra("NAME", contact.getName());
+                intent.putExtra("PHONE_NUMBER", contact.getPhoneNumber());
+                intent.putExtra("PUB_KEY", contact.getPublicKey());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 appContext.startActivity(intent);
             }

@@ -36,7 +36,7 @@ public class GenerateQRCodeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_qrcode);
         ButterKnife.inject(this);
-        generateQRCode(getIntent().getStringExtra("Name"), getIntent().getStringExtra("PhoneNumber"), getIntent().getByteArrayExtra("PubKey"));
+        generateQRCode(getIntent().getStringExtra("NAME"), getIntent().getStringExtra("PHONE_NUMBER"), getIntent().getByteArrayExtra("PUB_KEY"));
 
     }
 

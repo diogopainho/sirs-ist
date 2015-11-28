@@ -43,12 +43,16 @@ public class SmsListActivity extends AppCompatActivity {
 
     @OnClick(R.id.qrcode)
     public void goToGenerateQRCode(){
-        MyContact mycontact = new Select().from(MyContact.class).where("PhoneNumber=?", getIntent().getStringExtra("PHONE_NUMBER")).executeSingle();
+        List<MyContact> mycontacts = new Select().from(MyContact.class).where("PhoneNumber=?", getIntent().getStringExtra("PHONE_NUMBER")).execute();
+
+        //Para ir buscar os ultimos dados para um determinado numero de telefone. Duas pessoas nao podem usar o mesmo numero
+        MyContact mycontact = mycontacts.get(mycontacts.size()-1);
+
         Intent intent = new Intent(getApplicationContext(), GenerateQRCodeActivity.class);
 
-        intent.putExtra("Name", mycontact.getName());
-        intent.putExtra("PhoneNumber", mycontact.getPhoneNumber());
-        intent.putExtra("PubKey", mycontact.getBytesPrivatekey());
+        intent.putExtra("NAME", mycontact.getName());
+        intent.putExtra("PHONE_NUMBER", mycontact.getPhoneNumber());
+        intent.putExtra("PUB_KEY", mycontact.getBytesPrivatekey());
 
         startActivity(intent);
     }
