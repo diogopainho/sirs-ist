@@ -18,7 +18,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SmsListActivity extends AppCompatActivity {
-    private static SmsListActivity inst;
+    private static SmsListActivity instance;
     AdapterSmsList adapter_smsList;
 
     @InjectView(R.id.message_list) RecyclerView messagelist;
@@ -38,7 +38,7 @@ public class SmsListActivity extends AppCompatActivity {
     }
 
     public static SmsListActivity getInstance(){
-        return inst;
+        return instance;
     }
 
     @OnClick(R.id.qrcode)
@@ -70,8 +70,7 @@ public class SmsListActivity extends AppCompatActivity {
     }
 
     public static List<Message_Model> getAll(){
-        //TODO: Selecionar a ultima mensagem de cada contato
-        return new Select().from(Message_Model.class).orderBy("Timestamp ASC").execute();
+        return new Select().from(Message_Model.class).orderBy("ID DESC").execute();
     }
 
     @Override
@@ -83,4 +82,5 @@ public class SmsListActivity extends AppCompatActivity {
         messagelist.setAdapter(adapter_smsList);
         messagelist.invalidate();
     }
+
 }

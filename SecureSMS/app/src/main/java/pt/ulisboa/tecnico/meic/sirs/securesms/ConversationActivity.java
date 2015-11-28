@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.EditText;
 
 import com.activeandroid.query.Select;
 
@@ -16,14 +18,15 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-/**
- * Created by diogopainho on 23/11/15.
- */
+
 public class ConversationActivity extends AppCompatActivity {
     AdapterConversationList adapter_conversationList;
+    static String phonenumber;
 
-    @InjectView(R.id.conversation_list)
-    RecyclerView conversationlist;
+
+    @InjectView(R.id.message)
+    EditText message;
+    @InjectView(R.id.conversation_list) RecyclerView conversationlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +34,32 @@ public class ConversationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conversation_list);
         ButterKnife.inject(this);
         ArrayList<Message_Model> messages = new ArrayList<Message_Model>();
-        adapter_conversationList = new AdapterConversationList(messages);
+        adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
 
         conversationlist.setLayoutManager(new LinearLayoutManager(this));
 
-        getAll(getIntent().getStringExtra("SENDER"));
-
+        phonenumber = getIntent().getStringExtra("PHONE_NUMBER");
+        Log.d("PHONE_NUMBER", phonenumber);
     }
 
+    @OnClick(R.id.send)
+    public void sendSms(){
+        SmsSender sender = new SmsSender();
+        sender.sendSms(phonenumber, message.getText().toString(), getApplicationContext());
+    }
 
-    public static List<Message_Model> getAll(String sender){
-        //TODO: Selecionar a ultima mensagem de cada contato
-        return new Select().from(Message_Model.class).where("SentTo=?", sender).orderBy("Timestamp DESC").execute();
+    public static List<Message_Model> getAll(){
+        return new Select().from(Message_Model.class).where("PhoneNumber=?", phonenumber).execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll(getIntent().getStringExtra("SENDER"));
-        adapter_conversationList = new AdapterConversationList(messages);
+        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
+        adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
         conversationlist.setAdapter(adapter_conversationList);
         conversationlist.invalidate();
     }
+
 }

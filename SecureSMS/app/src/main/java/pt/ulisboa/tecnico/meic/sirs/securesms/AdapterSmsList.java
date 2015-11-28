@@ -68,18 +68,14 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
 
         final Message_Model message = mDataset.get(position);
 
-        if(message.getFrom() != null){
-            holder.txtHeader.setText(message.getFrom());
-        } else { holder.txtHeader.setText(message.getTo()); }
-
+        holder.txtHeader.setText(message.getPhoneNumber());
         holder.txtFooter.setText(message.getMessage().substring(0, Math.min(10, message.getMessage().length())));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(appContext, ConversationActivity.class);
-                intent.putExtra("TO", message.getTo());
+                intent.putExtra("PHONE_NUMBER", message.getPhoneNumber());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 appContext.startActivity(intent);
             }
@@ -94,8 +90,6 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
         };*/
 
 
-
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -103,6 +97,7 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
     public int getItemCount() {
         return mDataset.size();
     }
+
 
     public void setDataset(ArrayList<Message_Model> messages){
         this.mDataset=messages;

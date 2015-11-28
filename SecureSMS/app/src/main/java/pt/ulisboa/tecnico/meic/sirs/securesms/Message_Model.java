@@ -4,52 +4,39 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.security.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
 
 @Table(name="Messages")
 public class Message_Model extends Model {
-    @Column(name="ReceivedFrom") String from;
-    @Column(name="SentTo") String to;
+    @Column(name="PhoneNumber") String phonenumber;
+    @Column(name="Type") Boolean type;
     @Column(name="Message") String message = new String();
-    @Column(name="Timestamp") int timestamp = 0;
 
     public Message_Model() {
 
     }
 
-    public Message_Model(String fromto, String message, Boolean sent) {
-
-        if(sent){
-            this.to = fromto;
-        } else {
-            this.from = fromto;
-        }
-
+    public Message_Model(String fromto, String message, Boolean type) {
+        this.phonenumber = fromto;
         this.message = message;
-        this.timestamp += 1;
+        this.type = type;
 
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public String getTo() {
-        return to;
-    }
 
     public String getMessage() {
         return message;
     }
 
-    public void setFrom(String from) { this.from = from; }
-
-    public void setTo(String to) {
-        this.to = to;
+    public String getPhoneNumber() {
+        return phonenumber;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public Boolean getType() {
+        return type;
     }
-
 }
 

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
@@ -50,13 +51,7 @@ public class SmsReceiver extends BroadcastReceiver {
             //Guarda a mensagem decifrada
             Message_Model receivedMessage = new Message_Model(address, smsBody, false);
             receivedMessage.save();
-
-            Log.d("ADDRESS: ", address);
-
-            //SmsListActivity inst = SmsListActivity.getInstance();
-            //inst.onResume();
         }
-
     }
 
 
