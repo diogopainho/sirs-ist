@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.activeandroid.query.Select;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,10 +78,27 @@ public class SmsListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        BusStation.getBus().register(this);
         ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
         adapter_smsList = new AdapterSmsList(messages, getApplicationContext());
         messagelist.setAdapter(adapter_smsList);
         messagelist.invalidate();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        BusStation.getBus().unregister(this);
+
+    }
+
+    @Subscribe
+    public void busReceivedMessage(BusMessage busmessage){
+
+        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
+        adapter_smsList = new AdapterSmsList(messages, getApplicationContext());
+        adapter_smsList.add(messages.size()-1,busmessage.getMessage_model());
+        messagelist.setAdapter(adapter_smsList);
+        messagelist.invalidate();
+    }
 }

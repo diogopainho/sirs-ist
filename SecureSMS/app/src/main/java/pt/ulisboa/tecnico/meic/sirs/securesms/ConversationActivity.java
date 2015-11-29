@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import com.activeandroid.query.Select;
@@ -48,6 +49,7 @@ public class ConversationActivity extends AppCompatActivity {
         SmsSender sender = new SmsSender();
         sender.sendSms(phonenumber, message.getText().toString(), getApplicationContext());
         message.setText("");
+        refreshList();
     }
 
     public static List<Message_Model> getAll(){
@@ -62,6 +64,14 @@ public class ConversationActivity extends AppCompatActivity {
         adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
         conversationlist.setAdapter(adapter_conversationList);
         conversationlist.invalidate();
+        conversationlist.scrollToPosition(messages.size()-1);
     }
 
+    public void refreshList(){
+        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
+        adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
+        conversationlist.setAdapter(adapter_conversationList);
+        conversationlist.invalidate();
+        conversationlist.scrollToPosition(messages.size()-1);
+    }
 }

@@ -51,6 +51,8 @@ public class SmsReceiver extends BroadcastReceiver {
             //Guarda a mensagem decifrada
             Message_Model receivedMessage = new Message_Model(address, smsBody, false);
             receivedMessage.save();
+
+            BusStation.getBus().post(new BusMessage(receivedMessage));
         }
     }
 
