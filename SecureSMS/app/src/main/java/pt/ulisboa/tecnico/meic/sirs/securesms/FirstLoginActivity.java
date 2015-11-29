@@ -71,7 +71,7 @@ public class FirstLoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         //As chaves sao geradas no momento do first login e sao armazenadas na base de dados
-        MyContact myContact = new MyContact(name, phonenumber, password, generateKeyPair());
+        MyContact myContact = new MyContact(name, phonenumber, password, CryptoHelper.generateKeyPair());
         myContact.save();
 
         new android.os.Handler().postDelayed(
@@ -118,20 +118,5 @@ public class FirstLoginActivity extends AppCompatActivity {
         }
 
         return valid;
-    }
-
-
-    public KeyPair generateKeyPair() {
-        KeyPairGenerator keyPairGenerator = null;
-        try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        keyPairGenerator.initialize(1024);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        return keyPair;
     }
 }
