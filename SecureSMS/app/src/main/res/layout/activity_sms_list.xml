@@ -28,7 +28,7 @@
     <LinearLayout
         android:id="@+id/bottombar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:weightSum="3"
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:src="@drawable/ic_supervisor_account_white_24dp"/>
 
         <ImageView
             android:id="@+id/qrcode"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:src="@drawable/ic_contact_phone_white_24dp"/>
 
         <ImageView
             android:id="@+id/compose"
@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:src="@drawable/ic_send_white_24dp"/>
     </LinearLayout>
 
 </RelativeLayout>

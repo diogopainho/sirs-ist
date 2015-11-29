@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.content.Context;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -26,31 +27,32 @@ public class SmsSender {
 
     public void sendSms(String phoneNumber, String message, Context context) {
 
-        //Guarda a sms em plain text na base de dados
-        Message_Model model = new Message_Model(phoneNumber, message, true);
-        model.save();
+        if(message != null){
+            //Guarda a sms em plain text na base de dados
+            Message_Model model = new Message_Model(phoneNumber, message, true);
+            model.save();
 
-        MyContact myContact = new Select().from(MyContact.class).executeSingle();
+            MyContact myContact = new Select().from(MyContact.class).executeSingle();
 
-        PrivateKey privateKey = bytesToPrivateKey(myContact.getBytesPrivatekey());
-        String cipheredMessage = cipherMessage(message, privateKey);
+            PrivateKey privateKey = bytesToPrivateKey(myContact.getBytesPrivatekey());
+            String cipheredMessage = cipherMessage(message, privateKey);
 
-        try {
-            // Get the default instance of the SmsManager
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNumber,
-                    null,
-                    message,
-                    null,
-                    null);
-            Toast.makeText(context, "Your sms has successfully sent!"+" "+phoneNumber+" "+ cipheredMessage,
-                    Toast.LENGTH_LONG).show();
-        } catch (Exception ex) {
-            Toast.makeText(context,"Your sms has failed...",
-                    Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
+            try {
+                // Get the default instance of the SmsManager
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNumber,
+                        null,
+                        cipheredMessage,
+                        null,
+                        null);
+                Toast.makeText(context, "Your sms has successfully sent!"+" "+phoneNumber+" "+ message,
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception ex) {
+                Toast.makeText(context,"Your sms has failed...",
+                        Toast.LENGTH_LONG).show();
+                ex.printStackTrace();
+            }
         }
-
     }
 
 

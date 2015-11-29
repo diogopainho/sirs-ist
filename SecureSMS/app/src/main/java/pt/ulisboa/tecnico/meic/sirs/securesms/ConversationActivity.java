@@ -40,12 +40,14 @@ public class ConversationActivity extends AppCompatActivity {
 
         phonenumber = getIntent().getStringExtra("PHONE_NUMBER");
         Log.d("PHONE_NUMBER", phonenumber);
+
     }
 
     @OnClick(R.id.send)
     public void sendSms(){
         SmsSender sender = new SmsSender();
         sender.sendSms(phonenumber, message.getText().toString(), getApplicationContext());
+        message.setText("");
     }
 
     public static List<Message_Model> getAll(){
