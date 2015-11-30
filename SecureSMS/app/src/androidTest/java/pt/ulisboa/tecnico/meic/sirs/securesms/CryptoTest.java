@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
+import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
@@ -9,6 +11,7 @@ import junit.framework.TestCase;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
@@ -166,7 +169,7 @@ public class CryptoTest extends TestCase {
         }
     }
 
-    public void testAsymmetricCryptographyBase64() {
+    public void testAsymmetricCryptographyEncoded() {
         KeyPair me;
         KeyPair other;
 
@@ -180,13 +183,49 @@ public class CryptoTest extends TestCase {
             byte[] cipheredBytes = secureMessage.doFinal();
 
             // Sent via communication channel
-            String cipheredText = Base64.encodeToString(cipheredBytes, Base64.DEFAULT);
-            Log.d("CryptoTest", "testAsymmetricCryptographyBase64: cipheredText: " + cipheredText);
+            String cipheredText = SmsEncoding.encode(cipheredBytes);
+            Log.d("CryptoTest", "testAsymmetricCryptographyBase64 - cipheredText: " + cipheredText);
 
             // Receiving side
             me = destination;
             other = source;
-            byte[] receivedCipheredBytes = Base64.decode(cipheredText, Base64.DEFAULT);
+            byte[] receivedCipheredBytes = SmsEncoding.decode(cipheredText);
+            SecureMessage receivedSecureMessage = SecureMessage.parse(receivedCipheredBytes);
+            PlainMessage receivedPlainMessage = receivedSecureMessage.toPlain(me.getPrivate(), other.getPublic());
+
+            Assert.assertNotNull(receivedPlainMessage);
+            Assert.assertTrue(Arrays.equals(plainBytes, receivedPlainMessage.getContent()));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    public void testAsymmetricCryptographyEncodedDivided() {
+        KeyPair me;
+        KeyPair other;
+
+        try {
+            // Sending side
+            me = source;
+            other = destination;
+            byte[] plainBytes = plainText.getBytes();
+            PlainMessage plainMessage = new PlainMessage(plainBytes);
+            SecureMessage secureMessage = new SecureMessage(plainMessage, other.getPublic(), me.getPrivate());
+            byte[] cipheredBytes = secureMessage.doFinal();
+            String cipheredText = SmsEncoding.encode(cipheredBytes);
+
+            // Sent via communication channel
+            SmsManager smsManager = SmsManager.getDefault();
+            ArrayList<String> multiPartSms = smsManager.divideMessage(cipheredText);
+            Log.d("CryptoTest", "AsymCryptoDivided - " + multiPartSms.size() + " parts");
+
+            // Receiving side
+            me = destination;
+            other = source;
+            String receivedCipheredText = TextUtils.join("", multiPartSms);
+            byte[] receivedCipheredBytes = SmsEncoding.decode(receivedCipheredText);
             SecureMessage receivedSecureMessage = SecureMessage.parse(receivedCipheredBytes);
             PlainMessage receivedPlainMessage = receivedSecureMessage.toPlain(me.getPrivate(), other.getPublic());
 

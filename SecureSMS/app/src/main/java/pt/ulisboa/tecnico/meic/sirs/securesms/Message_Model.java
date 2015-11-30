@@ -23,7 +23,6 @@ public class Message_Model extends Model {
         this.phonenumber = fromto;
         this.message = message;
         this.type = type;
-
     }
 
 
