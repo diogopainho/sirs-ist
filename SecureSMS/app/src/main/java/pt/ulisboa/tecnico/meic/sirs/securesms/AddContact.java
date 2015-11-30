@@ -4,6 +4,7 @@ package pt.ulisboa.tecnico.meic.sirs.securesms;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -55,7 +56,7 @@ public class AddContact extends Activity {
     public void addContact(String content){
         String[] parse = content.split(";");
 
-        Contact_Model newContact = new Contact_Model(parse[0], parse[1], parse[2].getBytes());
+        Contact_Model newContact = new Contact_Model(parse[0], parse[1], Base64.decode(parse[2], Base64.DEFAULT));
         newContact.save();
     }
 
