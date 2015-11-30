@@ -67,11 +67,15 @@ public class FirstLoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         String name = _nameText.getText().toString();
-        String phonenumber = _phoneText.getText().toString();
+        String phonenumber = "+351" + _phoneText.getText().toString();
         String password = _passwordText.getText().toString();
 
         //As chaves sao geradas no momento do first login e sao armazenadas na base de dados
-        MyContact myContact = new MyContact(name, phonenumber, password, CryptoHelper.generateKeyPair());
+        KeyPair myKeyPair = CryptoHelper.generateKeyPair();
+        MyContact myAccount = new MyContact(name, phonenumber, password, myKeyPair);
+        myAccount.save();
+
+        Contact_Model myContact = new Contact_Model(name, phonenumber, myKeyPair.getPublic());
         myContact.save();
 
         new android.os.Handler().postDelayed(

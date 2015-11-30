@@ -34,7 +34,7 @@ public class SmsReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "Sms received");
         String smsBody = "";
-        String address = null;
+        String srcAddress = null;
         Bundle intentExtras = intent.getExtras();
         if (intentExtras != null) {
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
@@ -44,26 +44,28 @@ public class SmsReceiver extends BroadcastReceiver {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
                 smsBody += smsMessage.getMessageBody();
-                address = smsMessage.getOriginatingAddress();
+                srcAddress = smsMessage.getOriginatingAddress();
+                Log.d(TAG, "Received (partial) sms from: " + srcAddress);
 
-                smsMessageStr += "SMS From: " + address + "\n";
+                smsMessageStr += "SMS From: " + srcAddress + "\n";
                 smsMessageStr += smsBody;
             }
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 
             MyContact myContact = new Select().from(MyContact.class).executeSingle();
             PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(myContact.getBytesPrivatekey());
-            PublicKey sourcePublicKey = KeyHelper.bytesToPublicKey(myContact.getBytesPublickey());
+            Contact_Model sender = new Select().from(Contact_Model.class).where("Phone_Number=?", srcAddress).executeSingle();
+            PublicKey senderPublicKey = KeyHelper.bytesToPublicKey(sender.getPublicKey());
 
             try {
                 byte[] receivedCipheredBytes = SmsEncoding.decode(smsBody);
                 SecureMessage receivedSecureMessage = SecureMessage.parse(receivedCipheredBytes);
-                PlainMessage receivedPlainMessage = receivedSecureMessage.toPlain(myPrivateKey, sourcePublicKey);
+                PlainMessage receivedPlainMessage = receivedSecureMessage.toPlain(myPrivateKey, senderPublicKey);
                 String plainText = new String(receivedPlainMessage.getContent());
                 Log.d(TAG, "Received sms plainText: " + plainText);
 
                 //Guarda a mensagem decifrada
-                Message_Model receivedMessage = new Message_Model(address, plainText, false);
+                Message_Model receivedMessage = new Message_Model(srcAddress, plainText, false);
                 receivedMessage.save();
 
                 BusStation.getBus().post(new BusMessage(receivedMessage));

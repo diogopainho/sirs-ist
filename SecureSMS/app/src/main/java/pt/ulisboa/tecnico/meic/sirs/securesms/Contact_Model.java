@@ -20,10 +20,16 @@ public class Contact_Model extends Model {
     public Contact_Model() {
     }
 
-    public Contact_Model(String name, String phone_number, byte[] public_key) {
+    public Contact_Model(String name, String phone_number, byte[] publicKeyBytes) {
         this.name = name;
         this.phonenumber = phone_number;
-        this.publickey = public_key;
+        this.publickey = publicKeyBytes;
+    }
+
+    public Contact_Model(String name, String phone_number, PublicKey publicKey) {
+        this.name = name;
+        this.phonenumber = phone_number;
+        this.publickey = publicKey.getEncoded();
     }
 
     public String getName() {

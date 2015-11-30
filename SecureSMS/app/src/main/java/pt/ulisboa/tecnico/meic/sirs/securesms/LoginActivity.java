@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_login)
     public void login() {
-        String phoneNumber = _phoneNumber.getText().toString();
+        String phoneNumber = "+351"+_phoneNumber.getText().toString();
         String password = _passwordText.getText().toString();
         String mypassword = null;
         String myphonenumber = null;
