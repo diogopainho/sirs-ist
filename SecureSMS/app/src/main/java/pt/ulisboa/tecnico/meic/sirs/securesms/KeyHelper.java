@@ -1,6 +1,8 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -12,6 +14,21 @@ import java.security.spec.X509EncodedKeySpec;
  * Created by ruimams on 30/11/2015.
  */
 public class KeyHelper {
+    public static KeyPair generateKeyPair() {
+        KeyPairGenerator keyPairGenerator = null;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        keyPairGenerator.initialize(1024);
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        return keyPair;
+    }
+
+
     public static PublicKey bytesToPublicKey(byte[] pubkeybytes){
 
         PublicKey pub = null;

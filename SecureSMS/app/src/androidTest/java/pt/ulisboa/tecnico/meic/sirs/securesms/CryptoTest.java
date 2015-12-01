@@ -27,8 +27,8 @@ public class CryptoTest extends TestCase {
     protected final String plainText = "hello world";
 
     protected void setUp() {
-        this.source = CryptoHelper.generateKeyPair();
-        this.destination = CryptoHelper.generateKeyPair();
+        this.source = KeyHelper.generateKeyPair();
+        this.destination = KeyHelper.generateKeyPair();
     }
 
     public void testHardcoded() {

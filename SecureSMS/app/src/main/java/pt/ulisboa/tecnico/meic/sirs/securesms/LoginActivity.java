@@ -70,19 +70,19 @@ public class LoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String mypassword = null;
         String myphonenumber = null;
-        MyContact myContact = null;
+        UserModel userModel = null;
 
 
         if(phoneNumber != null && password != null){
-            myContact = new Select().from(MyContact.class).where("PhoneNumber=?", phoneNumber).orderBy("RANDOM()").executeSingle();
+            userModel = new Select().from(UserModel.class).where("PhoneNumber=?", phoneNumber).orderBy("RANDOM()").executeSingle();
         } else {
             _phoneNumber.setError("Preencha com o seu número");
             _passwordText.setError("Preencha com a sua password");
         }
 
-        if(myContact != null) {
-             mypassword = myContact.getPassword();
-             myphonenumber = myContact.getPhoneNumber();
+        if(userModel != null) {
+             mypassword = userModel.getPassword();
+             myphonenumber = userModel.getPhoneNumber();
         } else {
             Toast.makeText(getBaseContext(), "Utilizador não autorizado", Toast.LENGTH_LONG).show();
         }

@@ -9,8 +9,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 
-@Table(name="MyContact")
-public class MyContact extends Model {
+@Table(name="UserModel")
+public class UserModel extends Model {
 
     @Column(name="Name") String name;
     @Column(name="PhoneNumber") String phonenumber;
@@ -18,10 +18,10 @@ public class MyContact extends Model {
     @Column(name="PrivateKey") byte[] privatekey;
     @Column(name="PublicKey") byte[] publickey;
 
-    public MyContact() {
+    public UserModel() {
     }
 
-    public MyContact(String name, String phonenumber, String password, KeyPair keyPair) {
+    public UserModel(String name, String phonenumber, String password, KeyPair keyPair) {
         this.name = name;
         this.phonenumber = phonenumber;
         this.password = password;

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
@@ -44,16 +43,13 @@ public class SmsListActivity extends AppCompatActivity {
 
     @OnClick(R.id.qrcode)
     public void goToGenerateQRCode(){
-        List<MyContact> mycontacts = new Select().from(MyContact.class).where("PhoneNumber=?", getIntent().getStringExtra("PHONE_NUMBER")).execute();
-
-        //Para ir buscar os ultimos dados para um determinado numero de telefone. Duas pessoas nao podem usar o mesmo numero
-        MyContact mycontact = mycontacts.get(mycontacts.size()-1);
+        UserModel user = new Select().from(UserModel.class).executeSingle();
 
         Intent intent = new Intent(getApplicationContext(), GenerateQRCodeActivity.class);
 
-        intent.putExtra("NAME", mycontact.getName());
-        intent.putExtra("PHONE_NUMBER", mycontact.getPhoneNumber());
-        intent.putExtra("PUB_KEY", mycontact.getBytesPrivatekey());
+        intent.putExtra("NAME", user.getName());
+        intent.putExtra("PHONE_NUMBER", user.getPhoneNumber());
+        intent.putExtra("PUB_KEY", user.getBytesPublickey());
 
         startActivity(intent);
     }

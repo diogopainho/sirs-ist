@@ -8,21 +8,9 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 
 
 public class SmsSender {
@@ -32,7 +20,7 @@ public class SmsSender {
         phoneNumber = "+351"+phoneNumber;
 
         if(message != null){
-            MyContact myAccount = new Select().from(MyContact.class).executeSingle();
+            UserModel user = new Select().from(UserModel.class).executeSingle();
             Contact_Model destinationContact = new Select()
                     .from(Contact_Model.class)
                     .where("Phone_Number=?", phoneNumber)
@@ -45,8 +33,10 @@ public class SmsSender {
                 return;
             }
 
+            Log.d(TAG, "Destination name: "+destinationContact.getName());
+            Log.d(TAG, "Destination public key length: "+destinationContact.getPublicKey().length);
             PublicKey destinationPublicKey = KeyHelper.bytesToPublicKey(destinationContact.getPublicKey());
-            PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(myAccount.getBytesPrivatekey());
+            PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(user.getBytesPrivatekey());
 
             try {
                 byte[] plainBytes = message.getBytes();

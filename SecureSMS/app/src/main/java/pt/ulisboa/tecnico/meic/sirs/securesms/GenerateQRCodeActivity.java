@@ -1,10 +1,9 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 
+import com.activeandroid.query.Select;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import com.google.zxing.qrcode.encoder.Encoder;
-
 
 
 import android.app.Activity;
@@ -12,18 +11,21 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Xml;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.security.PublicKey;
+import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class GenerateQRCodeActivity extends Activity {
+
+    private static final String TAG = GenerateQRCodeActivity.class.getSimpleName();
+
     @InjectView(R.id.name)
     TextView nameLabel;
     @InjectView(R.id.phone)
@@ -41,7 +43,8 @@ public class GenerateQRCodeActivity extends Activity {
     }
 
     public void generateQRCode(String name, String phonenumber, byte[] publickey){
-        String qrInputText = name+";"+phonenumber+";"+ Base64.encodeToString(publickey, Base64.DEFAULT);
+        String qrInputText = name+";"+phonenumber+";"+Base64.encodeToString(publickey, Base64.DEFAULT);
+
         nameLabel.setText("Name: " + name);
         phoneLabel.setText("Phone Number: " + phonenumber);
         keyLabel.setText("Public Key:" + Base64.encodeToString(publickey, Base64.DEFAULT));

@@ -99,19 +99,4 @@ public class CryptoHelper {
         byte[] cipheredBytes = Base64.decode(cipheredText, Base64.DEFAULT);
         return new String(decrypt(cipheredBytes, key));
     }
-
-
-    public static KeyPair generateKeyPair() {
-        KeyPairGenerator keyPairGenerator = null;
-        try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        keyPairGenerator.initialize(1024);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        return keyPair;
-    }
 }

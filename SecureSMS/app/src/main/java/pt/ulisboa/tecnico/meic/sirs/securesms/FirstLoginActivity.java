@@ -10,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -71,9 +69,9 @@ public class FirstLoginActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         //As chaves sao geradas no momento do first login e sao armazenadas na base de dados
-        KeyPair myKeyPair = CryptoHelper.generateKeyPair();
-        MyContact myAccount = new MyContact(name, phonenumber, password, myKeyPair);
-        myAccount.save();
+        KeyPair myKeyPair = KeyHelper.generateKeyPair();
+        UserModel user = new UserModel(name, phonenumber, password, myKeyPair);
+        user.save();
 
         Contact_Model myContact = new Contact_Model(name, phonenumber, myKeyPair.getPublic());
         myContact.save();
@@ -89,8 +87,6 @@ public class FirstLoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 }, 3000);
-
-
     }
 
     public boolean validate() {

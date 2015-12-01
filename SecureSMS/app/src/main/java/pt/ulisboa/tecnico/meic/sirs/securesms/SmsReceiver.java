@@ -4,22 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
-import java.nio.channels.SelectableChannel;
 import java.security.InvalidKeyException;
-import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -52,8 +46,8 @@ public class SmsReceiver extends BroadcastReceiver {
             }
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 
-            MyContact myContact = new Select().from(MyContact.class).executeSingle();
-            PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(myContact.getBytesPrivatekey());
+            UserModel user = new Select().from(UserModel.class).executeSingle();
+            PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(user.getBytesPrivatekey());
             Contact_Model sender = new Select().from(Contact_Model.class).where("Phone_Number=?", srcAddress).executeSingle();
             PublicKey senderPublicKey = KeyHelper.bytesToPublicKey(sender.getPublicKey());
 
