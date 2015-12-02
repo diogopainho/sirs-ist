@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,9 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.AdapterContactList;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.ContactModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
 
 public class ContactListActivity extends AppCompatActivity {
     AdapterContactList adaptercontactlist;
@@ -32,7 +35,7 @@ public class ContactListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.inject(this);
-        ArrayList<Contact_Model> contact = new ArrayList<Contact_Model>();
+        ArrayList<ContactModel> contact = new ArrayList<ContactModel>();
         adaptercontactlist = new AdapterContactList(contact, getApplicationContext());
         contactlist.setLayoutManager(new LinearLayoutManager(this));
 
@@ -45,15 +48,15 @@ public class ContactListActivity extends AppCompatActivity {
 
     }
 
-    public static List<Contact_Model> getAll(){
-        return new Select().from(Contact_Model.class).orderBy("Name DESC").execute();
+    public static List<ContactModel> getAll(){
+        return new Select().from(ContactModel.class).orderBy("Name DESC").execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        ArrayList<Contact_Model> contact = (ArrayList<Contact_Model>) getAll();
+        ArrayList<ContactModel> contact = (ArrayList<ContactModel>) getAll();
         adaptercontactlist = new AdapterContactList(contact, getApplicationContext());
         contactlist.setAdapter(adaptercontactlist);
         contactlist.invalidate();

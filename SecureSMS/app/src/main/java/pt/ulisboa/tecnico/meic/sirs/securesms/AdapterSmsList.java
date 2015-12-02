@@ -3,18 +3,19 @@ package pt.ulisboa.tecnico.meic.sirs.securesms;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import pt.ulisboa.tecnico.meic.sirs.securesms.Activities.ConversationActivity;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.MessageModel;
+
 
 public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHolder> {
-    private ArrayList<Message_Model> mDataset;
+    private ArrayList<MessageModel> mDataset;
     private Context appContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -28,18 +29,18 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
         }
     }
 
-    public void add(int position, Message_Model item) {
+    public void add(int position, MessageModel item) {
         mDataset.add(position, item);
         notifyItemInserted(position);
     }
 
-    public void remove(Message_Model item) {
+    public void remove(MessageModel item) {
         int position = mDataset.indexOf(item);
         mDataset.remove(position);
         notifyItemRemoved(position);
     }
 
-    public AdapterSmsList(ArrayList<Message_Model> myDataset, Context appContext) {
+    public AdapterSmsList(ArrayList<MessageModel> myDataset, Context appContext) {
         mDataset = myDataset;
         this.appContext = appContext;
     }
@@ -56,7 +57,7 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Message_Model message = mDataset.get(position);
+        final MessageModel message = mDataset.get(position);
 
         holder.txtHeader.setText(message.getPhoneNumber());
         holder.txtFooter.setText(message.getMessage().substring(0, Math.min(10, message.getMessage().length())));
@@ -88,7 +89,7 @@ public class AdapterSmsList extends RecyclerView.Adapter<AdapterSmsList.ViewHold
     }
 
 
-    public void setDataset(ArrayList<Message_Model> messages){
+    public void setDataset(ArrayList<MessageModel> messages){
         this.mDataset=messages;
     }
 }

@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Crypto;
 
 import java.security.KeyFactory;
 import java.security.KeyPair;

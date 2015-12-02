@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Models;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -7,6 +7,8 @@ import com.activeandroid.annotation.Table;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+
+import pt.ulisboa.tecnico.meic.sirs.securesms.Crypto.KeyHelper;
 
 
 @Table(name="UserModel")

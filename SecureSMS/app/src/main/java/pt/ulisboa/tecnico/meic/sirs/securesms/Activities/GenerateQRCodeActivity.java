@@ -1,7 +1,6 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 
-import com.activeandroid.query.Select;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 
@@ -11,16 +10,16 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Arrays;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Contents;
+import pt.ulisboa.tecnico.meic.sirs.securesms.QRCodeEncoder;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
 
 public class GenerateQRCodeActivity extends Activity {
 

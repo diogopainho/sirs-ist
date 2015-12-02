@@ -1,26 +1,22 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Models;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-import java.security.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-
 
 @Table(name="Messages")
-public class Message_Model extends Model {
-    @Column(name="PhoneNumber") String phonenumber;
+public class MessageModel extends Model {
+    @Column(name="PhoneNumber") String phoneNumber;
     @Column(name="Type") Boolean type;
     @Column(name="Message") String message = new String();
 
-    public Message_Model() {
+    public MessageModel() {
 
     }
 
-    public Message_Model(String fromto, String message, Boolean type) {
-        this.phonenumber = fromto;
+    public MessageModel(String fromto, String message, Boolean type) {
+        this.phoneNumber = fromto;
         this.message = message;
         this.type = type;
     }
@@ -31,7 +27,7 @@ public class Message_Model extends Model {
     }
 
     public String getPhoneNumber() {
-        return phonenumber;
+        return phoneNumber;
     }
 
     public Boolean getType() {

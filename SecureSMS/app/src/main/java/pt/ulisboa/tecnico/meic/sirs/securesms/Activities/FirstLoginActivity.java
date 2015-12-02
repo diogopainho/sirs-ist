@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -14,9 +14,13 @@ import java.security.KeyPair;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Crypto.KeyHelper;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.ContactModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.UserModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
 
 public class FirstLoginActivity extends AppCompatActivity {
-    private static final String TAG = "FirstLoginActivity";
+    private static final String TAG = FirstLoginActivity.class.getSimpleName();
 
     @InjectView(R.id.input_name)
     EditText _nameText;
@@ -72,7 +76,7 @@ public class FirstLoginActivity extends AppCompatActivity {
         UserModel user = new UserModel(name, phonenumber, password, myKeyPair);
         user.save();
 
-        Contact_Model myContact = new Contact_Model(name, phonenumber, myKeyPair.getPublic());
+        ContactModel myContact = new ContactModel(name, phonenumber, myKeyPair.getPublic());
         myContact.save();
 
         new android.os.Handler().postDelayed(

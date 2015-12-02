@@ -1,14 +1,16 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 
-public class BusMessage {
-    private Message_Model message_model;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.MessageModel;
 
-    public BusMessage(Message_Model message_model){
+public class BusMessage {
+    private MessageModel message_model;
+
+    public BusMessage(MessageModel message_model){
         this.message_model = message_model;
     }
 
-    public Message_Model getMessage_model() {
+    public MessageModel getMessage_model() {
         return message_model;
     }
 }

@@ -21,37 +21,37 @@
 
         <meta-data android:name="AA_DB_NAME" android:value="SecureSMS.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".Activities.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ContactListActivity"
+            android:name=".Activities.ContactListActivity"
             android:label="@string/title_activity_contact_list"
             android:theme="@style/AppTheme.Dark" >
         </activity>
-        <activity android:name=".FirstLoginActivity" >
+        <activity android:name=".Activities.FirstLoginActivity" >
         </activity>
         <activity
-            android:name=".SmsListActivity"
+            android:name=".Activities.SmsListActivity"
             android:label="@string/title_activity_sms_list"
             android:theme="@style/AppTheme.Dark" >
         </activity>
         <activity
-            android:name=".SmsComposerActivity" >
+            android:name=".Activities.SmsComposerActivity" >
         </activity>
         <activity
-            android:name=".AddContactActivity" >
+            android:name=".Activities.AddContactActivity" >
         </activity>
         <activity
-            android:name=".GenerateQRCodeActivity" >
+            android:name=".Activities.GenerateQRCodeActivity" >
         </activity>
         <activity
-            android:name=".ConversationActivity" >
+            android:name=".Activities.ConversationActivity" >
         </activity>
-        <receiver android:name="pt.ulisboa.tecnico.meic.sirs.securesms.SmsReceiver" android:enabled="true">
+        <receiver android:name=".Sms.SmsReceiver" android:enabled="true">
             <intent-filter android:priority="214748364">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>

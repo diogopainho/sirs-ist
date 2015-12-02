@@ -64,21 +64,5 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
-        <TextView android:id="@+id/temp_skip"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Temporary: skip to compose"
-            android:gravity="center"
-            android:textSize="16dip"/>
-
-        <TextView android:id="@+id/temp1_skip"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Temporary: fast login sms list"
-            android:gravity="center"
-            android:textSize="16dip"/>
-
     </LinearLayout>
 </ScrollView>

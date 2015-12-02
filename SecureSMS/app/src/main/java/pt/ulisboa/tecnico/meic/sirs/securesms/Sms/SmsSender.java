@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Sms;
 
 import android.telephony.SmsManager;
 
@@ -18,7 +18,5 @@ public class SmsSender {
                 multiPartSms,
                 null,
                 null);
-
-
     }
 }

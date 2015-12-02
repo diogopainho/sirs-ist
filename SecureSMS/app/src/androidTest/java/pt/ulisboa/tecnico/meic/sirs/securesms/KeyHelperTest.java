@@ -10,6 +10,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 
+import pt.ulisboa.tecnico.meic.sirs.securesms.Crypto.KeyHelper;
+
 /**
  * Created by ruimams on 01/12/2015.
  */

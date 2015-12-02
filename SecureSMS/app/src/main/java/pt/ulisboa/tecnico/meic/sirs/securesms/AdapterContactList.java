@@ -10,8 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import pt.ulisboa.tecnico.meic.sirs.securesms.Activities.GenerateQRCodeActivity;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.ContactModel;
+
 public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.ViewHolder> {
-    private ArrayList<Contact_Model> mDataset;
+    private ArrayList<ContactModel> mDataset;
     private Context appContext;
 
 
@@ -27,18 +30,18 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
         }
     }
 
-    public void add(int position, Contact_Model item) {
+    public void add(int position, ContactModel item) {
         mDataset.add(position, item);
         notifyItemInserted(position);
     }
 
-    public void remove(Contact_Model item) {
+    public void remove(ContactModel item) {
         int position = mDataset.indexOf(item);
         mDataset.remove(position);
         notifyItemRemoved(position);
     }
 
-    public AdapterContactList(ArrayList<Contact_Model> myDataset, Context appContext) {
+    public AdapterContactList(ArrayList<ContactModel> myDataset, Context appContext) {
         mDataset = myDataset;
         this.appContext = appContext;
     }
@@ -55,7 +58,7 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Contact_Model contact = mDataset.get(position);
+        final ContactModel contact = mDataset.get(position);
         holder.txtName.setText(contact.getName());
         holder.txtNumber.setText(mDataset.get(position).getPhoneNumber());
 
@@ -72,14 +75,6 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
                 appContext.startActivity(intent);
             }
         });
-        //Accao para apagar a mensagem
-        /*holder.txtHeader.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                remove(message);
-            }
-        };*/
-
     }
 
     @Override
@@ -87,7 +82,7 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
         return mDataset.size();
     }
 
-    public void setDataset(ArrayList<Contact_Model> contact){
+    public void setDataset(ArrayList<ContactModel> contact){
         this.mDataset=contact;
     }
 }

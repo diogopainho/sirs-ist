@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 
 import android.app.Activity;
@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.IntentIntegrator;
+import pt.ulisboa.tecnico.meic.sirs.securesms.IntentResult;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.ContactModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
 
 
 public class AddContactActivity extends Activity {
@@ -51,7 +55,7 @@ public class AddContactActivity extends Activity {
     public void addContact(String content){
         String[] parse = content.split(";");
 
-        Contact_Model newContact = new Contact_Model(parse[0], parse[1], Base64.decode(parse[2], Base64.DEFAULT));
+        ContactModel newContact = new ContactModel(parse[0], parse[1], Base64.decode(parse[2], Base64.DEFAULT));
         newContact.save();
     }
 

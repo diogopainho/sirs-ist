@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -16,17 +16,17 @@ import com.activeandroid.query.Select;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.UserModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int REQUEST_SIGNUP = 0;
 
     @InjectView(R.id.input_phone) EditText _phoneNumber;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_login) Button _loginButton;
     @InjectView(R.id.link_signup) TextView _signupLink;
-    @InjectView(R.id.temp_skip) TextView _tempSkip;
-    @InjectView(R.id.temp1_skip) TextView _temp1Skip;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,22 +45,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        _tempSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SmsComposerActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        _temp1Skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     @OnClick(R.id.btn_login)
@@ -71,9 +55,16 @@ public class LoginActivity extends AppCompatActivity {
         String myphonenumber = null;
         UserModel userModel = null;
 
+        if (!validate()) {
+            onLoginFailed();
+            return;
+        }
 
         if(phoneNumber != null && password != null){
-            userModel = new Select().from(UserModel.class).where("PhoneNumber=?", phoneNumber).orderBy("RANDOM()").executeSingle();
+            userModel = new Select()
+                    .from(UserModel.class)
+                    .where("PhoneNumber=?", phoneNumber)
+                    .executeSingle();
         } else {
             _phoneNumber.setError("Preencha com o seu número");
             _passwordText.setError("Preencha com a sua password");
@@ -87,10 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        if (!validate()) {
-            onLoginFailed();
-            return;
-        }
+
 
         _loginButton.setEnabled(false);
 

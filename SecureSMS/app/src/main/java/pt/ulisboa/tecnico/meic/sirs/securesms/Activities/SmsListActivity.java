@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,12 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.AdapterSmsList;
+import pt.ulisboa.tecnico.meic.sirs.securesms.BusMessage;
+import pt.ulisboa.tecnico.meic.sirs.securesms.BusStation;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.MessageModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.UserModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
 
 public class SmsListActivity extends AppCompatActivity {
     private static final String TAG = SmsListActivity.class.getSimpleName();
@@ -32,7 +38,7 @@ public class SmsListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.inject(this);
-        ArrayList<Message_Model> messages = new ArrayList<Message_Model>();
+        ArrayList<MessageModel> messages = new ArrayList<MessageModel>();
         adapter_smsList = new AdapterSmsList(messages, getApplicationContext());
 
         messagelist.setLayoutManager(new LinearLayoutManager(this));
@@ -68,8 +74,8 @@ public class SmsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static List<Message_Model> getAll(){
-        return new Select().from(Message_Model.class).orderBy("ID DESC").execute();
+    public static List<MessageModel> getAll(){
+        return new Select().from(MessageModel.class).orderBy("ID DESC").execute();
     }
 
     @Override
@@ -77,7 +83,7 @@ public class SmsListActivity extends AppCompatActivity {
         super.onResume();
 
         BusStation.getBus().register(this);
-        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
+        ArrayList<MessageModel> messages = (ArrayList<MessageModel>) getAll();
         adapter_smsList = new AdapterSmsList(messages, getApplicationContext());
         messagelist.setAdapter(adapter_smsList);
         messagelist.invalidate();

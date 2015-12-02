@@ -1,8 +1,6 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +9,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.MessageModel;
+
 public class AdapterConversationList extends RecyclerView.Adapter<AdapterConversationList.ViewHolder>{
-    private ArrayList<Message_Model> mDataset;
+    private ArrayList<MessageModel> mDataset;
     Context appcontext;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -24,18 +24,18 @@ public class AdapterConversationList extends RecyclerView.Adapter<AdapterConvers
         }
     }
 
-    public void add(int position, Message_Model item) {
+    public void add(int position, MessageModel item) {
         mDataset.add(position, item);
         notifyItemInserted(position);
     }
 
-    public void remove(Message_Model item) {
+    public void remove(MessageModel item) {
         int position = mDataset.indexOf(item);
         mDataset.remove(position);
         notifyItemRemoved(position);
     }
 
-    public AdapterConversationList(ArrayList<Message_Model> myDataset, Context context) {
+    public AdapterConversationList(ArrayList<MessageModel> myDataset, Context context) {
         mDataset = myDataset;
         appcontext = context;
     }
@@ -52,7 +52,7 @@ public class AdapterConversationList extends RecyclerView.Adapter<AdapterConvers
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final Message_Model message = mDataset.get(position);
+        final MessageModel message = mDataset.get(position);
 
         holder.txtHeader.setText(message.getMessage());
 
@@ -77,7 +77,7 @@ public class AdapterConversationList extends RecyclerView.Adapter<AdapterConvers
     }
 
 
-    public void setDataset(ArrayList<Message_Model> messages){
+    public void setDataset(ArrayList<MessageModel> messages){
         this.mDataset=messages;
     }
 

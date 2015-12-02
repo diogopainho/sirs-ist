@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +15,15 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.AdapterConversationList;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Models.MessageModel;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Sms.SmsExchange;
 
 
 public class ConversationActivity extends AppCompatActivity {
     AdapterConversationList adapter_conversationList;
-    static String phonenumber;
+    static String phoneNumber;
 
 
     @InjectView(R.id.message) EditText message;
@@ -30,32 +34,33 @@ public class ConversationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation_list);
         ButterKnife.inject(this);
-        ArrayList<Message_Model> messages = new ArrayList<Message_Model>();
+        ArrayList<MessageModel> messages = new ArrayList<MessageModel>();
         adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
 
         conversationlist.setLayoutManager(new LinearLayoutManager(this));
 
-        phonenumber = getIntent().getStringExtra("PHONE_NUMBER");
-        Log.d("PHONE_NUMBER", phonenumber);
+        phoneNumber = getIntent().getStringExtra("PHONE_NUMBER");
+        Log.d("PHONE_NUMBER", phoneNumber);
 
     }
 
     @OnClick(R.id.send)
     public void sendSms(){
-        SmsSenderOld.sendSms(phonenumber, message.getText().toString(), getApplicationContext());
+        SmsExchange.send(phoneNumber, message.getText().toString(), getApplicationContext());
+
         message.setText("");
         refreshList();
     }
 
-    public static List<Message_Model> getAll(){
-        return new Select().from(Message_Model.class).where("PhoneNumber=?", phonenumber).execute();
+    public static List<MessageModel> getAll(){
+        return new Select().from(MessageModel.class).where("PhoneNumber=?", phoneNumber).execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
+        ArrayList<MessageModel> messages = (ArrayList<MessageModel>) getAll();
         adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
         conversationlist.setAdapter(adapter_conversationList);
         conversationlist.invalidate();
@@ -63,7 +68,7 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     public void refreshList(){
-        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
+        ArrayList<MessageModel> messages = (ArrayList<MessageModel>) getAll();
         adapter_conversationList = new AdapterConversationList(messages, getApplicationContext());
         conversationlist.setAdapter(adapter_conversationList);
         conversationlist.invalidate();

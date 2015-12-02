@@ -1,17 +1,16 @@
-package pt.ulisboa.tecnico.meic.sirs.securesms;
+package pt.ulisboa.tecnico.meic.sirs.securesms.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.activeandroid.query.Select;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import pt.ulisboa.tecnico.meic.sirs.securesms.R;
+import pt.ulisboa.tecnico.meic.sirs.securesms.Sms.SmsExchange;
 
 public class SmsComposerActivity extends AppCompatActivity {
     @InjectView(R.id.phone_number) EditText _phoneNumber;
@@ -30,27 +29,8 @@ public class SmsComposerActivity extends AppCompatActivity {
         String phoneNumber = _phoneNumber.getText().toString();
         String message = _message.getText().toString();
 
-        if (!phoneNumber.startsWith("+351")) {
-            phoneNumber = "+351" + phoneNumber;
-        }
+        SmsExchange.send(phoneNumber, message, getApplicationContext());
 
-        Contact_Model destinationContact = new Select()
-                .from(Contact_Model.class)
-                .where("Phone_Number=?", phoneNumber)
-                .executeSingle();
-
-        try {
-            SecureSmsProtocol.send(message, destinationContact);
-
-            //Guarda a sms em plain text na base de dados
-            Message_Model model = new Message_Model(phoneNumber, message, true);
-            model.save();
-
-            Toast.makeText(getApplicationContext(), "Your sms has successfully sent!"+" "+phoneNumber+" "+ message, Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Your sms has failed...", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
         Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
         startActivity(intent);
 
