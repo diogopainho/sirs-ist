@@ -22,8 +22,7 @@ public class ConversationActivity extends AppCompatActivity {
     static String phonenumber;
 
 
-    @InjectView(R.id.message)
-    EditText message;
+    @InjectView(R.id.message) EditText message;
     @InjectView(R.id.conversation_list) RecyclerView conversationlist;
 
     @Override

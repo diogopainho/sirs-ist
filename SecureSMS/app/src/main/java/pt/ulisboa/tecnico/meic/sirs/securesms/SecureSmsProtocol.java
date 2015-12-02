@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
-import android.util.Base64;
 import android.util.Log;
 
 import com.activeandroid.query.Select;
@@ -10,9 +9,6 @@ import java.util.Arrays;
 
 import javax.crypto.SecretKey;
 
-/**
- * Created by ruimams on 01/12/2015.
- */
 public class SecureSmsProtocol {
     private static final String TAG = SecureSmsProtocol.class.getSimpleName();
     private static final int INTEGRITY_LENGTH = 128;

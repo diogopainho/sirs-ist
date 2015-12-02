@@ -46,9 +46,6 @@
             android:name=".AddContactActivity" >
         </activity>
         <activity
-            android:name=".AddContact" >
-        </activity>
-        <activity
             android:name=".GenerateQRCodeActivity" >
         </activity>
         <activity

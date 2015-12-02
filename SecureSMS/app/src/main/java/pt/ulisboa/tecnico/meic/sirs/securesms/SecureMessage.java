@@ -13,9 +13,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-/**
- * Created by ruimams on 29/11/2015.
- */
+
 public class SecureMessage {
     private static final int INTEGRITY_LENGTH = 128;
     private byte[] cipheredContent;
@@ -63,11 +61,6 @@ public class SecureMessage {
                 Arrays.copyOfRange(finalMessage, 0, INTEGRITY_LENGTH));
     }
 
-    /**
-     * Compares two instances of SecureMessage.
-     * @param other
-     * @return true if the two instances are equal, false if they're different
-     */
     public boolean compare(SecureMessage other) {
         return Arrays.equals(this.cipheredContent, other.cipheredContent) &&
                 Arrays.equals(this.integrityPart, other.integrityPart);

@@ -4,9 +4,6 @@ import android.telephony.SmsManager;
 
 import java.util.ArrayList;
 
-/**
- * Created by ruimams on 02/12/2015.
- */
 public class SmsSender {
     public static void send(String phoneNumber, String message) {
         if (!phoneNumber.startsWith("+351")) {

@@ -14,9 +14,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by ruimams on 30/11/2015.
- */
 public class KeyHelper {
     public static KeyPair generateKeyPair() {
         KeyPairGenerator keyPairGenerator = null;

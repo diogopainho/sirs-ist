@@ -9,9 +9,6 @@ import java.security.PublicKey;
 
 import javax.crypto.SecretKey;
 
-/**
- * Created by diogopainho on 22/11/15.
- */
 
 @Table(name="Contacts")
 public class Contact_Model extends Model {

@@ -14,11 +14,8 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
     private ArrayList<Contact_Model> mDataset;
     private Context appContext;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public TextView txtName;
         public TextView txtNumber;
         public TextView txtKey;
@@ -41,28 +38,22 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
         notifyItemRemoved(position);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public AdapterContactList(ArrayList<Contact_Model> myDataset, Context appContext) {
         mDataset = myDataset;
         this.appContext = appContext;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public AdapterContactList.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                         int viewType) {
-        // create a new view
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.line_list, parent, false);
-        // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
         final Contact_Model contact = mDataset.get(position);
         holder.txtName.setText(contact.getName());
@@ -73,7 +64,6 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
 
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
                 Intent intent = new Intent(appContext, GenerateQRCodeActivity.class);
                 intent.putExtra("NAME", contact.getName());
                 intent.putExtra("PHONE_NUMBER", contact.getPhoneNumber());
@@ -92,7 +82,6 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();

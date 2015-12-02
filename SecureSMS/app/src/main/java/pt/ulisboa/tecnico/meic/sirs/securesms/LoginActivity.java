@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), FirstLoginActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
@@ -107,9 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                            // On complete call either onLoginSuccess or onLoginFailed
                             onLoginSuccess();
-                            // onLoginFailed();
                             progressDialog.dismiss();
                         }
                     }, 3000);
@@ -130,8 +127,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
-
-                // By default we just finish the Activity and log them in automatically
                 this.finish();
             }
         }
@@ -139,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // disable going back to the MainActivity
         moveTaskToBack(true);
     }
 

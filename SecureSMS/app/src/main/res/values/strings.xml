@@ -1,5 +1,27 @@
 <resources>
+
     <string name="app_name">SecureSMS</string>
+
     <string name="title_activity_sms_list">Messages</string>
     <string name="title_activity_contact_list">Contacts</string>
+    <string name="title_activity_qrcode_encoder">Generated QRCode</string>
+    <string name="title_activity_add_contact_method">Add with...</string>
+
+    <string name="label_name">Name:</string>
+    <string name="label_phone">Phone:</string>
+    <string name="label_key">Key:</string>
+
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_member">Already a member? Login</string>
+    <string name="first_use">First Use? Create a password</string>
+    <string name="send">Send</string>
+    <string name="qrcode">QR Code</string>
+    <string name="keybase">Key Base</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_phonenumber">Phone Number</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_message">Message</string>
+
 </resources>

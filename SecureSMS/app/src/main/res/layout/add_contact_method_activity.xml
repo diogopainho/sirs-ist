@@ -4,7 +4,7 @@
     android:id="@+id/methods"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".AddContactActivity" >
 
@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:layout_margin="20dp"
-        android:text="Add with..."
-        android:textColor="#000000"
+        android:text="@string/title_activity_add_contact_method"
+        android:textColor="@color/black"
         android:textSize="30dp" />
 
         <Button
@@ -25,7 +25,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="QR Code"
+            android:text="@string/qrcode"
             android:textSize="18dp" >
         </Button>
 
@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Key Base"
+            android:text="@string/keybase"
             android:textSize="18dp" >
         </Button>
 </LinearLayout>

@@ -15,11 +15,7 @@ public class AdapterConversationList extends RecyclerView.Adapter<AdapterConvers
     private ArrayList<Message_Model> mDataset;
     Context appcontext;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         public TextView txtHeader;
 
         public ViewHolder(View v) {
@@ -39,34 +35,27 @@ public class AdapterConversationList extends RecyclerView.Adapter<AdapterConvers
         notifyItemRemoved(position);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public AdapterConversationList(ArrayList<Message_Model> myDataset, Context context) {
         mDataset = myDataset;
         appcontext = context;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public AdapterConversationList.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                         int viewType) {
-        // create a new view
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_line, parent, false);
-        // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
         final Message_Model message = mDataset.get(position);
 
         holder.txtHeader.setText(message.getMessage());
 
-        //As mensagens enviadas ficam a verde
         if(message.getType()){
             holder.txtHeader.setBackgroundColor(appcontext.getResources().getColor(R.color.iron));
             holder.txtHeader.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
@@ -82,7 +71,6 @@ public class AdapterConversationList extends RecyclerView.Adapter<AdapterConvers
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();

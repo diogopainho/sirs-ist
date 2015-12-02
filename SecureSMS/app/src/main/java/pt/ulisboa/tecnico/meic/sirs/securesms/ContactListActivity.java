@@ -40,7 +40,7 @@ public class ContactListActivity extends AppCompatActivity {
 
     @OnClick(R.id.addcontact)
     public void goToAddMethod(){
-        Intent intent = new Intent(this, AddContact.class);
+        Intent intent = new Intent(this, AddContactActivity.class);
         startActivity(intent);
 
     }

@@ -18,9 +18,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-/**
- * Created by ruimams on 28/11/2015.
- */
+
 public class AsymCrypto {
     private static byte[] crypto(int opmode, byte[] input, Key key) throws InvalidKeyException,
             NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException,

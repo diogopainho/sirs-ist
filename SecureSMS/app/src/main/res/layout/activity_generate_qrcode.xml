@@ -8,7 +8,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generated QR Code"
+        android:text="@string/title_activity_qrcode_encoder"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
@@ -22,21 +22,21 @@
         android:paddingTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="21dp"
-        android:text="Name:"/>
+        android:text="@string/label_name"/>
 
     <TextView
         android:id="@+id/phone"
         android:paddingTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="21dp"
-        android:text="Name:"/>
+        android:text="@string/label_phone"/>
 
     <TextView
         android:id="@+id/key"
         android:paddingTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:text="Name:"/>
+        android:text="@string/label_key"/>
 
 
 </LinearLayout>

@@ -19,9 +19,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-/**
- * Created by ruimams on 01/12/2015.
- */
+
 public class SymCrypto {
     private static final String SYMMETRIC_ALGORITHM = "AES/CBC/PKCS5Padding";
     private static final int IV_LENGTH = 16;
