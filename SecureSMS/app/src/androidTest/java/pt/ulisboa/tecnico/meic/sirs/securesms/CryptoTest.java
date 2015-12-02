@@ -9,14 +9,10 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
-
-import pt.ulisboa.tecnico.meic.sirs.securesms.FirstLoginActivity;
 
 /**
  * Created by ruimams on 28/11/2015.
@@ -61,8 +57,8 @@ public class CryptoTest extends TestCase {
         try {
             byte[] content = plainText.getBytes();
 
-            byte[] signature = CryptoHelper.sign(content, source.getPrivate());
-            boolean validSignature = CryptoHelper.verify(content, signature, source.getPublic());
+            byte[] signature = AsymCrypto.sign(content, source.getPrivate());
+            boolean validSignature = AsymCrypto.verify(content, signature, source.getPublic());
 
             Assert.assertTrue(validSignature);
         }
@@ -76,8 +72,8 @@ public class CryptoTest extends TestCase {
         try {
             byte[] plainBytes = plainText.getBytes();
 
-            byte[] cipheredBytes = CryptoHelper.encrypt(plainBytes, source.getPublic());
-            byte[] uncipheredBytes = CryptoHelper.decrypt(cipheredBytes, source.getPrivate());
+            byte[] cipheredBytes = AsymCrypto.encrypt(plainBytes, source.getPublic());
+            byte[] uncipheredBytes = AsymCrypto.decrypt(cipheredBytes, source.getPrivate());
 
             Assert.assertTrue(Arrays.equals(plainBytes, uncipheredBytes));
         }

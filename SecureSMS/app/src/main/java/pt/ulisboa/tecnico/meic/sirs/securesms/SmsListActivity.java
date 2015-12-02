@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
@@ -18,6 +19,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SmsListActivity extends AppCompatActivity {
+    private static final String TAG = SmsListActivity.class.getSimpleName();
     private static SmsListActivity instance;
     AdapterSmsList adapter_smsList;
 
@@ -90,10 +92,8 @@ public class SmsListActivity extends AppCompatActivity {
 
     @Subscribe
     public void busReceivedMessage(BusMessage busmessage){
-
-        ArrayList<Message_Model> messages = (ArrayList<Message_Model>) getAll();
-        adapter_smsList = new AdapterSmsList(messages, getApplicationContext());
-        adapter_smsList.add(messages.size()-1,busmessage.getMessage_model());
+        Log.d(TAG, "busReceivedMessage");
+        adapter_smsList.add(0, busmessage.getMessage_model());
         messagelist.setAdapter(adapter_smsList);
         messagelist.invalidate();
     }

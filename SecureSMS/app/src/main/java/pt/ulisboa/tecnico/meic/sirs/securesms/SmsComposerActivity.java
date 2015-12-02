@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
@@ -40,9 +41,27 @@ public class SmsComposerActivity extends AppCompatActivity {
         String phoneNumber = _phoneNumber.getText().toString();
         String message = _message.getText().toString();
 
-        SmsSender smsSender = new SmsSender();
-        smsSender.sendSms(phoneNumber, message, getApplicationContext());
+        if (!phoneNumber.startsWith("+351")) {
+            phoneNumber = "+351" + phoneNumber;
+        }
 
+        Contact_Model destinationContact = new Select()
+                .from(Contact_Model.class)
+                .where("Phone_Number=?", phoneNumber)
+                .executeSingle();
+
+        try {
+            SecureSmsProtocol.send(message, destinationContact);
+
+            //Guarda a sms em plain text na base de dados
+            Message_Model model = new Message_Model(phoneNumber, message, true);
+            model.save();
+
+            Toast.makeText(getApplicationContext(), "Your sms has successfully sent!"+" "+phoneNumber+" "+ message, Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Your sms has failed...", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
         Intent intent = new Intent(getApplicationContext(), SmsListActivity.class);
         startActivity(intent);
 

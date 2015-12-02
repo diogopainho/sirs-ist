@@ -10,6 +10,10 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 /**
  * Created by ruimams on 30/11/2015.
  */
@@ -62,5 +66,18 @@ public class KeyHelper {
         }
 
         return priv;
+    }
+
+
+    public static SecretKey generateSymmetricKey() throws NoSuchAlgorithmException {
+        KeyGenerator KeyGen = KeyGenerator.getInstance("AES");
+        KeyGen.init(128);
+
+        return KeyGen.generateKey();
+    }
+
+
+    public static SecretKey bytesToSecretKey(byte[] secretKeyBytes) {
+        return new SecretKeySpec(secretKeyBytes, "AES");
     }
 }

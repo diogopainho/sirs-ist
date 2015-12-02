@@ -46,16 +46,13 @@ public class SmsReceiver extends BroadcastReceiver {
             }
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 
-            UserModel user = new Select().from(UserModel.class).executeSingle();
-            PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(user.getBytesPrivatekey());
-            Contact_Model sender = new Select().from(Contact_Model.class).where("Phone_Number=?", srcAddress).executeSingle();
-            PublicKey senderPublicKey = KeyHelper.bytesToPublicKey(sender.getPublicKey());
+            Contact_Model sender = new Select()
+                    .from(Contact_Model.class)
+                    .where("Phone_Number=?", srcAddress)
+                    .executeSingle();
 
             try {
-                byte[] receivedCipheredBytes = SmsEncoding.decode(smsBody);
-                SecureMessage receivedSecureMessage = SecureMessage.parse(receivedCipheredBytes);
-                PlainMessage receivedPlainMessage = receivedSecureMessage.toPlain(myPrivateKey, senderPublicKey);
-                String plainText = new String(receivedPlainMessage.getContent());
+                String plainText = SecureSmsProtocol.receive(smsBody, sender);
                 Log.d(TAG, "Received sms plainText: " + plainText);
 
                 //Guarda a mensagem decifrada
@@ -66,36 +63,27 @@ public class SmsReceiver extends BroadcastReceiver {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+//            UserModel user = new Select().from(UserModel.class).executeSingle();
+//            PrivateKey myPrivateKey = KeyHelper.bytesToPrivateKey(user.getBytesPrivatekey());
+//            Contact_Model sender = new Select().from(Contact_Model.class).where("Phone_Number=?", srcAddress).executeSingle();
+//            PublicKey senderPublicKey = KeyHelper.bytesToPublicKey(sender.getPublicKeyBytes());
+//
+//            try {
+//                byte[] receivedCipheredBytes = SmsEncoding.decode(smsBody);
+//                SecureMessage receivedSecureMessage = SecureMessage.parse(receivedCipheredBytes);
+//                PlainMessage receivedPlainMessage = receivedSecureMessage.toPlain(myPrivateKey, senderPublicKey);
+//                String plainText = new String(receivedPlainMessage.getContent());
+//                Log.d(TAG, "Received sms plainText: " + plainText);
+//
+//                //Guarda a mensagem decifrada
+//                Message_Model receivedMessage = new Message_Model(srcAddress, plainText, false);
+//                receivedMessage.save();
+//
+//                BusStation.getBus().post(new BusMessage(receivedMessage));
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
         }
-    }
-
-
-    public String decypherMessage(String receivedMessage, String sender){
-
-        Contact_Model contact = new Select().from(Contact_Model.class).where("Phone_Number=?", sender).executeSingle();
-        PublicKey publicKey = KeyHelper.bytesToPublicKey(contact.getPublicKey());
-
-        Cipher cipher = null;
-        byte[] newPlainBytes = null;
-
-        try {
-            cipher.getInstance("RSA/ECB/PKCS1Padding");
-            cipher.init(Cipher.DECRYPT_MODE, publicKey);
-            newPlainBytes = cipher.doFinal(receivedMessage.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        }
-
-        String cleanMessage = new String(newPlainBytes);
-        return cleanMessage;
-
     }
 }

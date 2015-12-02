@@ -1,13 +1,10 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 
 import com.activeandroid.query.Select;
@@ -46,8 +43,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     @OnClick(R.id.send)
     public void sendSms(){
-        SmsSender sender = new SmsSender();
-        sender.sendSms(phonenumber, message.getText().toString(), getApplicationContext());
+        SmsSenderOld.sendSms(phonenumber, message.getText().toString(), getApplicationContext());
         message.setText("");
         refreshList();
     }

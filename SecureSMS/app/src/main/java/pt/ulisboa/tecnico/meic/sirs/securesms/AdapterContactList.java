@@ -3,7 +3,6 @@ package pt.ulisboa.tecnico.meic.sirs.securesms;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +77,7 @@ public class AdapterContactList extends RecyclerView.Adapter<AdapterContactList.
                 Intent intent = new Intent(appContext, GenerateQRCodeActivity.class);
                 intent.putExtra("NAME", contact.getName());
                 intent.putExtra("PHONE_NUMBER", contact.getPhoneNumber());
-                intent.putExtra("PUB_KEY", contact.getPublicKey());
+                intent.putExtra("PUB_KEY", contact.getPublicKeyBytes());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 appContext.startActivity(intent);
             }

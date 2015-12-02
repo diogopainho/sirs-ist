@@ -43,6 +43,10 @@ public class UserModel extends Model {
 
     public byte[] getBytesPublickey() { return publickey; }
 
+    public PublicKey getPublicKey() { return KeyHelper.bytesToPublicKey(this.publickey); }
+
+    public PrivateKey getPrivateKey() { return KeyHelper.bytesToPrivateKey(this.privatekey); }
+
     public String getName() {
         return name;
     }

@@ -1,13 +1,12 @@
 package pt.ulisboa.tecnico.meic.sirs.securesms;
 
-import android.util.Base64;
-import android.util.Log;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
@@ -27,22 +26,22 @@ public class SecureMessage {
         this.integrityPart = integrityPart;
     }
 
-    public SecureMessage(PlainMessage plainMessage, Key confidentialityKey, Key signingKey) throws
+    public SecureMessage(PlainMessage plainMessage, Key confidentialityKey, PrivateKey signingKey) throws
             InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
             IllegalBlockSizeException, BadPaddingException {
 
-        this.cipheredContent = CryptoHelper.encrypt(plainMessage.getContent(), confidentialityKey);
-        this.integrityPart = CryptoHelper.sign(cipheredContent, signingKey); // TODO: Rename var?
+        this.cipheredContent = AsymCrypto.encrypt(plainMessage.getContent(), confidentialityKey);
+        this.integrityPart = AsymCrypto.sign(cipheredContent, signingKey); // TODO: Rename var?
     }
 
-    public PlainMessage toPlain(Key confidentialityKey, Key verificationKey) throws
+    public PlainMessage toPlain(Key confidentialityKey, PublicKey verificationKey) throws
             InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
             IllegalBlockSizeException, BadPaddingException{
 
         PlainMessage plainMessage = null;
 
-        if (CryptoHelper.verify(cipheredContent, integrityPart, verificationKey)) {
-            plainMessage = new PlainMessage(CryptoHelper.decrypt(cipheredContent, confidentialityKey));
+        if (AsymCrypto.verify(cipheredContent, integrityPart, verificationKey)) {
+            plainMessage = new PlainMessage(AsymCrypto.decrypt(cipheredContent, confidentialityKey));
         }
 
         return plainMessage;
@@ -52,8 +51,8 @@ public class SecureMessage {
     public byte[] doFinal() throws IOException { // TODO: Rename method?
         ByteArrayOutputStream finalMessage = new ByteArrayOutputStream();
 
-        finalMessage.write(integrityPart);
-        finalMessage.write(cipheredContent);
+        finalMessage.write(this.integrityPart);
+        finalMessage.write(this.cipheredContent);
 
         return finalMessage.toByteArray();
     }

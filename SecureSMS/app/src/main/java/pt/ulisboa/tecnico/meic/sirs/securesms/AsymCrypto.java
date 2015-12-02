@@ -10,6 +10,7 @@ import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
@@ -20,7 +21,7 @@ import javax.crypto.NoSuchPaddingException;
 /**
  * Created by ruimams on 28/11/2015.
  */
-public class CryptoHelper {
+public class AsymCrypto {
     private static byte[] crypto(int opmode, byte[] input, Key key) throws InvalidKeyException,
             NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException,
             BadPaddingException {
@@ -70,14 +71,14 @@ public class CryptoHelper {
         return md.digest();
     }
 
-    public static byte[] sign(byte[] content, Key signingKey) throws InvalidKeyException,
+    public static byte[] sign(byte[] content, PrivateKey signingKey) throws InvalidKeyException,
             NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException,
             BadPaddingException {
 
         return encrypt(hash(content), signingKey);
     }
 
-    public static boolean verify(byte[] content, byte[] signature, Key verificationKey) throws
+    public static boolean verify(byte[] content, byte[] signature, PublicKey verificationKey) throws
             InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
             IllegalBlockSizeException, BadPaddingException {
 
