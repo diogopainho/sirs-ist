@@ -11,7 +11,7 @@ import java.security.PublicKey;
 import pt.ulisboa.tecnico.meic.sirs.securesms.Crypto.KeyHelper;
 
 
-@Table(name="UserModel")
+@Table(name="Users")
 public class UserModel extends Model {
 
     @Column(name="Name") String name;
@@ -31,6 +31,10 @@ public class UserModel extends Model {
         this.publickey = keyPair.getPublic().getEncoded();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getPhoneNumber() {
         return phonenumber;
     }
@@ -39,17 +43,13 @@ public class UserModel extends Model {
         return password;
     }
 
-    public byte[] getBytesPrivatekey() {
-        return privatekey;
-    }
+    public byte[] getPrivateKeyBytes() { return privatekey; }
 
-    public byte[] getBytesPublickey() { return publickey; }
+    public byte[] getPublicKeyBytes() { return publickey; }
 
     public PublicKey getPublicKey() { return KeyHelper.bytesToPublicKey(this.publickey); }
 
     public PrivateKey getPrivateKey() { return KeyHelper.bytesToPrivateKey(this.privatekey); }
 
-    public String getName() {
-        return name;
-    }
+
 }

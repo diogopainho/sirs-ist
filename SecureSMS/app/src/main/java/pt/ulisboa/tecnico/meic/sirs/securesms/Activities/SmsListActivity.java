@@ -57,7 +57,7 @@ public class SmsListActivity extends AppCompatActivity {
 
         intent.putExtra("NAME", user.getName());
         intent.putExtra("PHONE_NUMBER", user.getPhoneNumber());
-        intent.putExtra("PUB_KEY", user.getBytesPublickey());
+        intent.putExtra("PUB_KEY", user.getPublicKeyBytes());
 
         startActivity(intent);
     }
